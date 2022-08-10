@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,900&display=swap');
+
+@layer components {
+    .slider-bg{
+        background: linear-gradient(rgba(0,0,0,.8),rgba(0,0,0,.6)),url('./assets/img/bg-2.png') no-repeat;
+        background-size: cover;
+        background-position: 50%;
+        height: 500px;
+        position: relative;
+        color: #fff;
+        z-index: 2;
+        display: flex;
+    }
+}
+
