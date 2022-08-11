@@ -5,7 +5,7 @@ import { BsPen } from 'react-icons/bs'
 const Header = () => {
     return (
         <header className="font-poppins h-[60px]">
-            <div className="bg-white fixed top-0 left-0 right-0 z-10">
+            <div className="bg-white fixed top-0 left-0 right-0 z-10 shadow-xl">
                 <div className="px-8 flex items-center justify-between">
                     <div className="flex items-center gap-x-[30px]">
                         <div>
@@ -36,5 +36,4 @@ const Header = () => {
         </header>
     )
 }
-
 export default Header
