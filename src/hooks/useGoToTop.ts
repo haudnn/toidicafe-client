@@ -11,7 +11,7 @@ const useGoToTop = () => {
   useEffect(() => {
     const handleShow = () => {
       let pageY = window.pageYOffset;
-      if (pageY > 300) {
+      if (pageY > 500) {
         setVisible(true);
       } else {
         setVisible(false);

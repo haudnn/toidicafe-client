@@ -6,15 +6,15 @@
 @layer components {
 
   .slider-bg {
+    position: relative;
+    display: flex;
+    z-index: 2;
+    color: #fff;
     background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6)),
       url('./assets/img/bg-2.png') no-repeat;
     background-size: cover;
     background-position: 50%;
     height: 500px;
-    position: relative;
-    color: #fff;
-    z-index: 2;
-    display: flex;
   }
   .tilte-before::before {
     position: absolute;
@@ -91,6 +91,92 @@
     transition: transform .4s cubic-bezier(.7,0,.3,1),-webkit-transform .4s cubic-bezier(.7,0,.3,1);
     transform-origin: 100% 50%;
   }
+  .search-container::before{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    content: "";
+    background: #232a31;
+    z-index: 2;
+    pointer-events: none;
+    transition: all .2s ease-out;
+  }
+  .search-container * {
+    z-index: 2;
+  }
+  .bg-linear-button{
+    background-image: linear-gradient(90deg,#e03,#ff567d 51%,#e03);
+    background-size: 200% auto;
+    transition: all .3s;
+  }
+  .pseudo-class-login::before{
+    content: "";
+    top: 50%;
+    width: 50%;
+    position: relative;
+    border-top: 1px solid #717171;
+    transform: translateY(50%);
+  }
+  .pseudo-class-login::after{
+    content: "";
+    top: 50%;
+    width: 50%;
+    position: relative;
+    border-top: 1px solid #717171;
+    transform: translateY(50%);
+  }
+  .img-auth-form{
+    background-repeat: no-repeat;
+    background-image: url('./assets/img/img-auth-form.png');
+    background-size: contain;
+    background-color: #fdebef;
+    background-position: 50%;
+    border: none;
+    width: 400px;
+  }
+  .radio-input {
+    display: none;
+ }
+ 
+ .radio-label {
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    background-color: #eee;
+    display: inline-block;
+    cursor: pointer;
+    margin: 0 1rem;
+    box-shadow: 0 0 0 4px #eee;
+    transition: all 0.25s linear;
+ }
+ 
+ .radio-input:checked + .radio-label {
+    box-shadow: 0 0 0 4px #fff, 0 0 0 6px #e03;
+    background-color: #e03;
+ }
+ .radio-input {
+  display: none;
+}
+
+.radio-label {
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+  background-color: #eee;
+  display: inline-block;
+  cursor: pointer;
+  margin: 0 1rem;
+  box-shadow: 0 0 0 4px #eee;
+  transition: all 0.25s linear;
+}
+
+.radio-input:checked + .radio-label {
+  box-shadow: 0 0 0 4px #fff, 0 0 0 6px #e03;
+  background-color: #e03;
+}
+
   @keyframes scale-img {
     from {
       background-position: -200px 0;

@@ -1,9 +1,10 @@
 import { Action, combineReducers, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './rootSaga';
-
+import authReducer from '../features/auth/authSlice';
 
 const rootReducer = combineReducers({
+  auth: authReducer,
 });
 
 const sagaMiddleware = createSagaMiddleware();
@@ -23,3 +24,4 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   unknown,
   Action<string>
 >;
+

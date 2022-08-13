@@ -16,13 +16,13 @@ const Home = () => {
         <Topic />
         <Area />
         <Location />
-        <section className="home-section py-10">
+        <section className="py-10 home-section">
           <div className="flex items-center justify-center">
             <div className="w-[220px]">
-              <img src={suggest_img} alt="" className="w-full h-full object-cover" />
+              <img src={suggest_img} alt="" className="object-cover w-full h-full" />
             </div>
-            <div className="text-center p-5">
-              <h3 className="text-2xl text-black font-bold mb-5">Chúng tôi có đang bỏ lỡ địa điểm nào bạn biết ?</h3>
+            <div className="p-5 text-center">
+              <h3 className="mb-5 text-2xl font-bold text-black">Chúng tôi có đang bỏ lỡ địa điểm nào bạn biết ?</h3>
               <Link to="/" className="uppercase text-white bg-[#e03] rounded-[10px] inline-flex items-center justify-center text-base font-semibold h-10 leading-10 px-5">
                 Đóng góp địa điểm
               </Link>
