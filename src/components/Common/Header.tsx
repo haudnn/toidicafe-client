@@ -14,9 +14,9 @@ const Header = () => {
         <header className="h-[60px] shadow-lg">
             <div className="flex items-center justify-between px-8">
                 <div className="flex items-center gap-x-[30px]">
-                    <div>
+                    <Link to="/">
                         <img src={logo} alt="Tôi đi cafe logo" />
-                    </div>
+                    </Link>
                     <div className="max-h-[60px] flex gap-x-[30px] items-center ">
                         <Link to="/" className="h-[60px] leading-[60px] font-semibold text-base block">
                             # Khám phá

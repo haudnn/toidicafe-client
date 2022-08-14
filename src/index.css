@@ -176,7 +176,188 @@
   box-shadow: 0 0 0 4px #fff, 0 0 0 6px #e03;
   background-color: #e03;
 }
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked {
+  position: absolute;
+  left: 0;
+  opacity: 0.01;
+}
+[type="checkbox"]:not(:checked) + label,
+[type="checkbox"]:checked + label {
+  position: relative;
+  padding-left: 2.3em;
+  cursor: pointer;
+}
+[type="checkbox"]:not(:checked) + label:before,
+[type="checkbox"]:checked + label:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1.4em;
+  height: 1.4em;
+  border: 1px solid #e5e5e5;
+  background: #fff;
+  border-radius: .2em;
+  -webkit-transition: all .275s;
+      transition: all .275s;
+}
 
+[type="checkbox"]:checked + label:before {
+  background: #e03;
+}
+[type="checkbox"]:not(:checked):hover + label:before{
+  border: 1px solid #e03;
+}
+[type="checkbox"]:not(:checked) + label:after,
+[type="checkbox"]:checked + label:after {
+  content: '\2713';
+  position: absolute;
+  top: 0.725em;
+  left: 0.38em;
+  font-size: 1em;
+  color: #fff;
+  line-height: 0;
+  -webkit-transition: all .2s;
+      transition: all .2s;
+}
+[type="checkbox"]:not(:checked) + label:after {
+  opacity: 0;
+  -webkit-transform: scale(0) rotate(45deg);
+      transform: scale(0) rotate(45deg);
+}
+.custom-scrollbar::-webkit-scrollbar{
+  width: 6px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #eee;
+  border-radius: 5px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: #fff;
+  border-radius: 5px;
+}
+.bg-place-overlay{
+  background-position: 50%;
+  transition: all .15s ease;
+}
+
+.bg-place-overlay::after{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  content: "";
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  background: rgba(0,0,0,.4);
+  transition: all,.25s ease-in-out;
+}
+.nohover.bg-place-overlay::after {
+  opacity: 1;
+}
+.bg-place-overlay:hover::after{
+  opacity: 1;
+}
+.button-review-animation{
+  transform: translateZ(0);
+  transition: all .15s ease;
+  animation: rotateButton 2s ease infinite;
+}
+@keyframes rotateButton {
+  0% {
+      -webkit-transform: rotate(0) scale(1) skew(1deg);
+      transform: rotate(0) scale(1) skew(1deg);
+    }
+  10% {
+    -webkit-transform: rotate(-25deg) scale(1) skew(1deg);
+    transform: rotate(-25deg) scale(1) skew(1deg);
+  }
+  20% {
+    -webkit-transform: rotate(25deg) scale(1) skew(1deg);
+    transform: rotate(25deg) scale(1) skew(1deg);
+}
+  30% {
+    -webkit-transform: rotate(-25deg) scale(1) skew(1deg);
+    transform: rotate(-25deg) scale(1) skew(1deg);
+  }
+  50% {
+    -webkit-transform: rotate(0) scale(1) skew(1deg);
+    transform: rotate(0) scale(1) skew(1deg);
+  }
+  100% {
+    -webkit-transform: rotate(0) scale(1) skew(1deg);
+    transform: rotate(0) scale(1) skew(1deg);
+  }
+}
+  .tags-after::after{
+    content: "●";
+    display: inline-block;
+    font-size: 6px;
+    color: #c1c1c1;
+    margin: 0 6px;
+  }
+  .height-details{
+    height: calc(100% - 28px);
+  }
+  .arrow-review::after{
+    position: absolute;
+    top: -10px;
+    right: 36px;
+    bottom: auto;
+    left: auto;
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #ffdcd8;
+  }
+  .container-reviewer {
+    width: calc(100% - 64px - 20px);
+  }
+  .container-reviewer::before{
+    position: absolute;
+    top: 30px;
+    right: auto;
+    bottom: auto;
+    left: -12px;
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #f5f5f7;
+    -webkit-transform: translatey(-50%) rotate(-90deg);
+    transform: translatey(-50%) rotate(-90deg);
+  }
+  .dot-after::after{
+    content: "●";
+    display: inline-block;
+    color: #f1f1f1;
+    margin: 0 12px;
+  }
+  .container-reply{
+    width: calc(100% - 64px - 20px);
+  }
+  .container-reply::before{
+    position: absolute;
+    top: 40px;
+    right: auto;
+    bottom: auto;
+    left: -12px;
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #f5f5f7;
+    transform: translatey(-50%) rotate(-90deg);
+  }
   @keyframes scale-img {
     from {
       background-position: -200px 0;

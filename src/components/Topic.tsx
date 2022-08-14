@@ -1,14 +1,15 @@
 import React from 'react'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import { Link } from 'react-router-dom'
-import KeenSlider from '../utils/KeenSlider'
+import useSlider from '../hooks/useSlider'
+
 
 const Topic = () => {
-    const sliderRef = KeenSlider(3)
+    const sliderRef = useSlider(3)
     return (
-        <section className="home-section pt-10">
+        <section className="pt-10 home-section">
             <div className="pb-10">
-                <p className="font-semibold text-3xl text-center tilte-before relative">Mục đích bạn cần ?</p>
+                <p className="relative text-3xl font-semibold text-center tilte-before">Mục đích bạn cần ?</p>
             </div>
             <div className="relative ml-[10px] mr-[10px]">
                 <div ref={sliderRef} className="keen-slider">
@@ -16,9 +17,9 @@ const Topic = () => {
                         <Link to="/" className="touch-manipulation img-hover">
                             <div className=" relative block cursor-pointer bg-white mx-3 overflow-hidden rounded-xl h-[220px] shadow bg-img-slider-container">
                                 <div className=" w-full bg-[#eee] rounded-xl shadow overflow-hidden h-[220px]">
-                                    <div className="h-full w-full relative overflow-hidden text-slider-after">
+                                    <div className="relative w-full h-full overflow-hidden text-slider-after">
                                         <div className="absolute top-0 left-0 w-full h-full">
-                                            <img src="https://toidicafe.vn/static/images/purpose/song-ao-1647441301274.jpeg?w=960" alt="Sống ảo" className="w-full h-full object-cover rounded-xl bg-img-slider" />
+                                            <img src="https://toidicafe.vn/static/images/purpose/song-ao-1647441301274.jpeg?w=960" alt="Sống ảo" className="object-cover w-full h-full rounded-xl bg-img-slider" />
                                         </div>
                                     </div>
                                 </div>
@@ -30,9 +31,9 @@ const Topic = () => {
                         <Link to="/" className="touch-manipulation img-hover">
                             <div className=" relative block cursor-pointer bg-white mx-3 overflow-hidden rounded-xl h-[220px] shadow bg-img-slider-container">
                                 <div className=" w-full bg-[#eee] rounded-xl shadow overflow-hidden h-[220px]">
-                                    <div className="h-full w-full relative overflow-hidden text-slider-after">
+                                    <div className="relative w-full h-full overflow-hidden text-slider-after">
                                         <div className="absolute top-0 left-0 w-full h-full">
-                                            <img src="https://toidicafe.vn/static/images/purpose/song-ao-1647441301274.jpeg?w=960" alt="Sống ảo" className="w-full h-full object-cover rounded-xl bg-img-slider" />
+                                            <img src="https://toidicafe.vn/static/images/purpose/song-ao-1647441301274.jpeg?w=960" alt="Sống ảo" className="object-cover w-full h-full rounded-xl bg-img-slider" />
                                         </div>
                                     </div>
                                 </div>
@@ -44,9 +45,9 @@ const Topic = () => {
                         <Link to="/" className="touch-manipulation img-hover">
                             <div className=" relative block cursor-pointer bg-white mx-3 overflow-hidden rounded-xl h-[220px] shadow bg-img-slider-container">
                                 <div className=" w-full bg-[#eee] rounded-xl shadow overflow-hidden h-[220px]">
-                                    <div className="h-full w-full relative overflow-hidden text-slider-after">
+                                    <div className="relative w-full h-full overflow-hidden text-slider-after">
                                         <div className="absolute top-0 left-0 w-full h-full">
-                                            <img src="https://toidicafe.vn/static/images/purpose/song-ao-1647441301274.jpeg?w=960" alt="Sống ảo" className="w-full h-full object-cover rounded-xl bg-img-slider" />
+                                            <img src="https://toidicafe.vn/static/images/purpose/song-ao-1647441301274.jpeg?w=960" alt="Sống ảo" className="object-cover w-full h-full rounded-xl bg-img-slider" />
                                         </div>
                                     </div>
                                 </div>
@@ -58,9 +59,9 @@ const Topic = () => {
                         <Link to="/" className="touch-manipulation img-hover">
                             <div className=" relative block cursor-pointer bg-white mx-3 overflow-hidden rounded-xl h-[220px] shadow bg-img-slider-container">
                                 <div className=" w-full bg-[#eee] rounded-xl shadow overflow-hidden h-[220px]">
-                                    <div className="h-full w-full relative overflow-hidden text-slider-after">
+                                    <div className="relative w-full h-full overflow-hidden text-slider-after">
                                         <div className="absolute top-0 left-0 w-full h-full">
-                                            <img src="https://toidicafe.vn/static/images/purpose/song-ao-1647441301274.jpeg?w=960" alt="Sống ảo" className="w-full h-full object-cover rounded-xl bg-img-slider" />
+                                            <img src="https://toidicafe.vn/static/images/purpose/song-ao-1647441301274.jpeg?w=960" alt="Sống ảo" className="object-cover w-full h-full rounded-xl bg-img-slider" />
                                         </div>
                                     </div>
                                 </div>
@@ -72,9 +73,9 @@ const Topic = () => {
                         <Link to="/" className="touch-manipulation img-hover">
                             <div className=" relative block cursor-pointer bg-white mx-3 overflow-hidden rounded-xl h-[220px] shadow bg-img-slider-container">
                                 <div className=" w-full bg-[#eee] rounded-xl shadow overflow-hidden h-[220px]">
-                                    <div className="h-full w-full relative overflow-hidden text-slider-after">
+                                    <div className="relative w-full h-full overflow-hidden text-slider-after">
                                         <div className="absolute top-0 left-0 w-full h-full">
-                                            <img src="https://toidicafe.vn/static/images/purpose/song-ao-1647441301274.jpeg?w=960" alt="Sống ảo" className="w-full h-full object-cover rounded-xl bg-img-slider" />
+                                            <img src="https://toidicafe.vn/static/images/purpose/song-ao-1647441301274.jpeg?w=960" alt="Sống ảo" className="object-cover w-full h-full rounded-xl bg-img-slider" />
                                         </div>
                                     </div>
                                 </div>
@@ -90,7 +91,7 @@ const Topic = () => {
                     <IoIosArrowForward className="w-7 h-7 text-[#2b2b2b]"></IoIosArrowForward>
                 </div>
             </div>
-            <div className="pt-7 flex items-center justify-center">
+            <div className="flex items-center justify-center pt-7">
                 <button className="cursor-pointer border-none w-[10px] h-[10px] bg-[#e03] rounded-[50%] p-[5px] mx-[5px]"></button>
                 <button className="cursor-pointer border-none w-[10px] h-[10px] bg-[#dfdfdf] rounded-[50%] p-[5px] mx-[5px]"></button>
                 <button className="cursor-pointer border-none w-[10px] h-[10px] bg-[#dfdfdf] rounded-[50%] p-[5px] mx-[5px]"></button>

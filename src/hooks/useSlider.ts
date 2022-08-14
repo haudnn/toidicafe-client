@@ -1,5 +1,5 @@
 import { useKeenSlider } from "keen-slider/react"
-export default function KeenSlider(perview:number) {
+export default function useSlider(perview:number) {
     const [sliderRef] = useKeenSlider<HTMLDivElement>(
         {
             loop: true,
