@@ -4,7 +4,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,900&display=swap');
 
 @layer components {
-
+  html{
+    scroll-behavior: smooth;
+  }
   .slider-bg {
     position: relative;
     display: flex;
@@ -357,6 +359,23 @@
     border-right: 8px solid transparent;
     border-bottom: 8px solid #f5f5f7;
     transform: translatey(-50%) rotate(-90deg);
+  }
+  .custom-transition-header{
+    transition: visibility 0s,opacity .2s linear;
+  }
+  .calc-place-height {
+    min-height: calc(100vh - 360px);
+  }
+  .star-tooltip::after{
+    content: "";
+    border-color: transparent #e03 transparent transparent;
+    border-style: solid;
+    border-width: 16px 16px 16px 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+    left: -16px;
+    top: 0;
   }
   @keyframes scale-img {
     from {

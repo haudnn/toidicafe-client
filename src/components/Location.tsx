@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom'
 
 const Location = () => {
     return (
-        <section className="home-section pt-10">
+        <section className="pt-10 home-section">
             <div className="pb-10">
-                <p className="font-semibold text-3xl text-center tilte-before relative">Địa điểm nổi bật</p>
+                <p className="relative text-3xl font-semibold text-center tilte-before">Địa điểm nổi bật</p>
             </div>
             <div>
                 <div className="grid">
@@ -14,7 +14,7 @@ const Location = () => {
                             <Link to="/" className="img-hover" >
                                 <div className="relative block cursor-pointer bg-white mx-3 mb-6 rounded-[10px] shadow-lg">
                                     <div className="w-full overflow-hidden h-[240px] rounded-tl-[10px] rounded-tr-[10px] ">
-                                        <div className="w-full h-full relative overflow-hidden bg-img-slider-container">
+                                        <div className="relative w-full h-full overflow-hidden bg-img-slider-container">
                                             <div className="absolute top-0 left-0 w-full h-full">
                                                 <img src="https://toidicafe.vn/static/images/place/moa-98-hang-buom/moa-98-hang-buom-avatar.jpg?w=960" alt="" className="w-full h-full object-cover rounded-tl-[10px] rounded-tr-[10px] bg-img-slider "/>
                                             </div>
@@ -31,7 +31,7 @@ const Location = () => {
                             <Link to="/" className="img-hover" >
                                 <div className="relative block cursor-pointer bg-white mx-3 mb-6 rounded-[10px] shadow-lg">
                                     <div className="w-full overflow-hidden h-[240px] rounded-tl-[10px] rounded-tr-[10px] ">
-                                        <div className="w-full h-full relative overflow-hidden bg-img-slider-container">
+                                        <div className="relative w-full h-full overflow-hidden bg-img-slider-container">
                                             <div className="absolute top-0 left-0 w-full h-full">
                                                 <img src="https://toidicafe.vn/static/images/place/moa-98-hang-buom/moa-98-hang-buom-avatar.jpg?w=960" alt="" className="w-full h-full object-cover rounded-tl-[10px] rounded-tr-[10px] bg-img-slider "/>
                                             </div>
@@ -48,7 +48,7 @@ const Location = () => {
                             <Link to="/" className="img-hover" >
                                 <div className="relative block cursor-pointer bg-white mx-3 mb-6 rounded-[10px] shadow-lg">
                                     <div className="w-full overflow-hidden h-[240px] rounded-tl-[10px] rounded-tr-[10px] ">
-                                        <div className="w-full h-full relative overflow-hidden bg-img-slider-container">
+                                        <div className="relative w-full h-full overflow-hidden bg-img-slider-container">
                                             <div className="absolute top-0 left-0 w-full h-full">
                                                 <img src="https://toidicafe.vn/static/images/place/moa-98-hang-buom/moa-98-hang-buom-avatar.jpg?w=960" alt="" className="w-full h-full object-cover rounded-tl-[10px] rounded-tr-[10px] bg-img-slider "/>
                                             </div>
@@ -65,7 +65,7 @@ const Location = () => {
                             <Link to="/" className="img-hover" >
                                 <div className="relative block cursor-pointer bg-white mx-3 mb-6 rounded-[10px] shadow-lg">
                                     <div className="w-full overflow-hidden h-[240px] rounded-tl-[10px] rounded-tr-[10px] ">
-                                        <div className="w-full h-full relative overflow-hidden bg-img-slider-container">
+                                        <div className="relative w-full h-full overflow-hidden bg-img-slider-container">
                                             <div className="absolute top-0 left-0 w-full h-full">
                                                 <img src="https://toidicafe.vn/static/images/place/moa-98-hang-buom/moa-98-hang-buom-avatar.jpg?w=960" alt="" className="w-full h-full object-cover rounded-tl-[10px] rounded-tr-[10px] bg-img-slider "/>
                                             </div>
@@ -82,7 +82,7 @@ const Location = () => {
                             <Link to="/" className="img-hover" >
                                 <div className="relative block cursor-pointer bg-white mx-3 mb-6 rounded-[10px] shadow-lg">
                                     <div className="w-full overflow-hidden h-[240px] rounded-tl-[10px] rounded-tr-[10px] ">
-                                        <div className="w-full h-full relative overflow-hidden bg-img-slider-container">
+                                        <div className="relative w-full h-full overflow-hidden bg-img-slider-container">
                                             <div className="absolute top-0 left-0 w-full h-full">
                                                 <img src="https://toidicafe.vn/static/images/place/moa-98-hang-buom/moa-98-hang-buom-avatar.jpg?w=960" alt="" className="w-full h-full object-cover rounded-tl-[10px] rounded-tr-[10px] bg-img-slider "/>
                                             </div>
@@ -99,7 +99,7 @@ const Location = () => {
                             <Link to="/" className="img-hover" >
                                 <div className="relative block cursor-pointer bg-white mx-3 mb-6 rounded-[10px] shadow-lg">
                                     <div className="w-full overflow-hidden h-[240px] rounded-tl-[10px] rounded-tr-[10px] ">
-                                        <div className="w-full h-full relative overflow-hidden bg-img-slider-container">
+                                        <div className="relative w-full h-full overflow-hidden bg-img-slider-container">
                                             <div className="absolute top-0 left-0 w-full h-full">
                                                 <img src="https://toidicafe.vn/static/images/place/moa-98-hang-buom/moa-98-hang-buom-avatar.jpg?w=960" alt="" className="w-full h-full object-cover rounded-tl-[10px] rounded-tr-[10px] bg-img-slider "/>
                                             </div>
@@ -116,7 +116,7 @@ const Location = () => {
                             <Link to="/" className="img-hover" >
                                 <div className="relative block cursor-pointer bg-white mx-3 mb-6 rounded-[10px] shadow-lg">
                                     <div className="w-full overflow-hidden h-[240px] rounded-tl-[10px] rounded-tr-[10px] ">
-                                        <div className="w-full h-full relative overflow-hidden bg-img-slider-container">
+                                        <div className="relative w-full h-full overflow-hidden bg-img-slider-container">
                                             <div className="absolute top-0 left-0 w-full h-full">
                                                 <img src="https://toidicafe.vn/static/images/place/moa-98-hang-buom/moa-98-hang-buom-avatar.jpg?w=960" alt="" className="w-full h-full object-cover rounded-tl-[10px] rounded-tr-[10px] bg-img-slider "/>
                                             </div>
@@ -133,7 +133,7 @@ const Location = () => {
                             <Link to="/" className="img-hover" >
                                 <div className="relative block cursor-pointer bg-white mx-3 mb-6 rounded-[10px] shadow-lg">
                                     <div className="w-full overflow-hidden h-[240px] rounded-tl-[10px] rounded-tr-[10px] ">
-                                        <div className="w-full h-full relative overflow-hidden bg-img-slider-container">
+                                        <div className="relative w-full h-full overflow-hidden bg-img-slider-container">
                                             <div className="absolute top-0 left-0 w-full h-full">
                                                 <img src="https://toidicafe.vn/static/images/place/moa-98-hang-buom/moa-98-hang-buom-avatar.jpg?w=960" alt="" className="w-full h-full object-cover rounded-tl-[10px] rounded-tr-[10px] bg-img-slider "/>
                                             </div>

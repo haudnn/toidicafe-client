@@ -1,61 +1,90 @@
-import React from 'react'
+import React, { useState} from 'react'
 import { Link } from 'react-router-dom'
 import ReadMore from '../components/ReadMore'
+import "keen-slider/keen-slider.min.css"
+
+
+import useSlider from '../../../hooks/useSlider'
+import useOnScroll from '../../../hooks/useOnScroll'
 
 import { BsBookmark, BsCardImage, BsClock, BsInstagram, BsTags, BsCloudSun, BsCreditCard2Front, BsCheckCircleFill } from 'react-icons/bs'
 import { GoLocation } from 'react-icons/go'
 import { MdAttachMoney, MdOutlineDirections } from 'react-icons/md'
 import { AiOutlineMail, AiOutlineWifi } from 'react-icons/ai'
-import { FaFacebookSquare, FaCarAlt, FaShippingFast, FaPaw, FaBaby, FaHeart, FaEdit, FaRegHeart } from 'react-icons/fa'
+import { FaFacebookSquare, FaCarAlt, FaShippingFast, FaPaw, FaBaby, FaHeart, FaEdit, FaRegHeart, FaTimes } from 'react-icons/fa'
 import { GiCakeSlice, GiWindyStripes } from 'react-icons/gi'
 import { BiDotsHorizontalRounded } from 'react-icons/bi'
+import RatingStar from '../components/RatingStar'
+import RatingText from '../components/RatingText'
 
-import useSlider from '../../../hooks/useSlider'
-import "keen-slider/keen-slider.min.css"
 
 const Place = () => {
     const sliderRef = useSlider(6)
+    const visible = useOnScroll(300)
+    const [ratingPosition, setRatingPosition] = useState(0)
+    const [ratingSpace, setRatingSpace] = useState(0)
+    const [ratingPrice, setRatingPrice] = useState(0)
+    const [ratingDrinks, setRatingDrinks] = useState(0)
+    const [ratingService, setRatingService] = useState(0)
+
+    const [activeTab, setActiveTab] = useState<Number>(0);
+    const nav = [
+        {
+            name: "Hình ảnh",
+            path: "#galery",
+        },
+        {
+            name: "Tổng quan",
+            path: "#detail",
+        },
+        {
+
+            name: "Tiện ích",
+            path: "#benefit",
+        },
+        {
+
+            name: "Đánh giá",
+            path: "#review",
+        },
+        {
+            name: "Lân cận",
+            path: "#related",
+        },
+    ];
+    const handleActiveTab = (i: number) => {
+        setActiveTab(i);
+    }
+    const handleRatingPosition = (rate: number) => setRatingPosition(rate)
+    const handleRatingSpace = (rate: number) => setRatingSpace(rate)
+    const handleRatingDrinks = (rate: number) => setRatingDrinks(rate)
+    const handleRatingService = (rate: number) => setRatingService(rate)
+    const handleRatingPrice = (rate: number) => setRatingPrice(rate)
+
     return (
-        <div className="place">
-            <div className="w-full min-h-screen">
+        <div className="place ">
+            <div className="w-full calc-place-height">
                 <div className="pt-[10px]">
                     <div className="grid wide">
-                        <div className="fixed top-0 left-0 bottom-auto right-auto z-10 visible w-full bg-white shadow-lg opacity-1">
+                        <div className={`${visible ? "visible opacity-100 " : "invisible opacity-0 "}fixed top-0 left-0 bottom-auto right-auto z-10  w-full bg-white shadow-lg custom-transition-header `}>
                             <div className="flex items-center justify-between w-[1200px] m-auto">
                                 <div className="whitespace-nowrap overflow-x-auto pl-[6px]">
                                     <nav>
                                         <ul className="flex">
-                                            <li className="text-base cursor-pointer h-full leading-[1.143] pr-5">
-                                                <Link to="/" className="p-3 border-b-2 border-solid block font-medium text-[#e03] border-[#e03]">
-                                                    Hình ảnh
-                                                </Link>
-                                            </li>
-                                            <li className="text-base cursor-pointer h-full leading-[1.143] pr-5">
-                                                <Link to="/" className="block p-3 border-b-2 border-transparent border-solid">
-                                                    Tổng quan
-                                                </Link>
-                                            </li>
-                                            <li className="text-base cursor-pointer h-full leading-[1.143] pr-5">
-                                                <Link to="/" className="block p-3 border-b-2 border-transparent border-solid">
-                                                    Tiện ích
-                                                </Link>
-                                            </li>
-                                            <li className="text-base cursor-pointer h-full leading-[1.143] pr-5">
-                                                <Link to="/" className="block p-3 border-b-2 border-transparent border-solid">
-                                                    Đánh giá
-                                                </Link>
-                                            </li>
-                                            <li className="text-base cursor-pointer h-full leading-[1.143] pr-5">
-                                                <Link to="/" className="block p-3 border-b-2 border-transparent border-solid">
-                                                    Lân cận
-                                                </Link>
-                                            </li>
+                                            {
+                                                nav.map(({ name, path }, i) => (
+                                                    <li key={i} className="text-base cursor-pointer h-full leading-[1.143] pr-5">
+                                                        <a onClick={() => handleActiveTab(i)} href={path} className={`${activeTab === i ? "text-[#e03] border-[#e03] border-b-2 border-solid " : " "} p-3  block font-medium `}>
+                                                            {name}
+                                                        </a>
+                                                    </li>))
+                                            }
                                         </ul>
                                     </nav>
                                 </div>
                             </div>
                         </div>
-                        <div className="p-2 mb-5 bg-white rounded-[10px] shadow-lg relative">
+                        <div id="galery" className="p-2 mb-5 bg-white rounded-[10px] shadow-lg relative">
                             <div className="flex items-start justify-between pl-2">
                                 <h2 className="text-3xl font-medium">EEBakery Coffee</h2>
                                 <div className="flex items-center justify-center p-[6px]">
@@ -107,7 +136,7 @@ const Place = () => {
                                 </span>
                             </Link>
                         </div>
-                        <div className="relative mb-5">
+                        <div id="detail" className="relative mb-5">
                             <div className="grid">
                                 <div className="row">
                                     <div className="col l-4">
@@ -228,7 +257,7 @@ const Place = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="relative block py-2 mb-5 bg-white rounded-[10px] cursor-pointer shadow-lg">
+                        <div id="benefit" className="relative block py-2 mb-5 bg-white rounded-[10px] cursor-pointer shadow-lg">
                             <div ref={sliderRef} className="keen-slider">
                                 <div className="keen-slider__slide">
                                     <div className="flex items-center text-center flex-col p-[6px] justify-center">
@@ -286,7 +315,7 @@ const Place = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="grid">
+                        <div id="review" className="grid">
                             <div className="row">
                                 <div className="col l-8">
                                     <div className="relative py-2 px-4 bg-white rounded-[10px] shadow-lg mb-5">
@@ -452,15 +481,279 @@ const Place = () => {
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>                                                       
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>                                            
+                                            </div>
+                                        </div>
+                                        {/* modal review */}
+                                        <div className="fixed top-0 bottom-0 left-0 right-0 w-full h-full bg-[rgba(0,0,0,0.65)] z-50">
+                                            <div className="absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center ">
+                                                <div className="w-[610px] relative max-h-[96%] flex flex-col flex-nowrap text-black overflow-hidden bg-white shadow-lg">
+                                                    <div className="h-[50px] px-10 w-full shrink-0 text-center border-b border-solid border-[rgba(0,0,0,0.1)]">
+                                                        <div className="flex items-center justify-center h-full">
+                                                            <h2 className="overflow-hidden text-lg font-bold text-black whitespace-nowrap text-ellipsis">Đánh giá EEBakery Coffee</h2>
+                                                        </div>
+                                                        <div className="w-[30px] h-[30px] text-lg absolute top-[10px] right-[10px] flex items-center justify-center bottom-auto left-auto cursor-pointer text-[#666] bg-[#e4e6eb] rounded-[50%]">
+                                                            <FaTimes />
+                                                        </div>
+                                                    </div>
+                                                    <div className="grow min-h-[200px] overflow-y-auto p-4">
+                                                        <div className="mb-3">
+                                                            <h3 className="text-base text-[#898c95]">Xếp hạng của bạn</h3>
+                                                            <div className="flex items-center justify-between pr-5 pl-[10px]">
+                                                                <span className="flex-1 text-base">Vị trí</span>
+                                                                <div className="flex-[2] text-3xl">
+                                                                    <RatingStar handleRating={handleRatingPosition} rating={ratingPosition} />
+                                                                </div>
+                                                                <div className="flex-1">
+                                                                    <div className="relative inline-block text-base font-medium h-8 leading-8 pr-3 pl-[6px] ml-5 mt-1 text-white bg-[#e03] rounded-t">
+                                                                        <RatingText rating={ratingPosition}/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="flex items-center justify-between pr-5 pl-[10px]">
+                                                                <span className="flex-1 text-base">Không gian</span>
+                                                                <div className="flex-[2] text-3xl">
+                                                                    <RatingStar handleRating={handleRatingSpace} rating={ratingSpace} />
+                                                                </div>
+                                                                <div className="flex-1">
+                                                                    <div className="relative inline-block text-base font-medium h-8 leading-8 pr-3 pl-[6px] ml-5 mt-1 text-white bg-[#e03] rounded-t">
+                                                                        <RatingText rating={ratingSpace}/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="flex items-center justify-between pr-5 pl-[10px]">
+                                                                <span className="flex-1 text-base">Đồ uống</span>
+                                                                <div className="flex-[2] text-3xl">
+                                                                    <RatingStar handleRating={handleRatingDrinks} rating={ratingDrinks} />
+                                                                </div>
+                                                                <div className="flex-1">
+                                                                    <div className="relative inline-block text-base font-medium h-8 leading-8 pr-3 pl-[6px] ml-5 mt-1 text-white bg-[#e03] rounded-t">
+                                                                        <RatingText rating={ratingDrinks}/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="flex items-center justify-between pr-5 pl-[10px]">
+                                                                <span className="flex-1 text-base">Phục vụ</span>
+                                                                <div className="flex-[2] text-3xl">
+                                                                    <RatingStar handleRating={handleRatingService} rating={ratingService} />
+                                                                </div>
+                                                                <div className="flex-1">
+                                                                    <div className="relative inline-block text-base font-medium h-8 leading-8 pr-3 pl-[6px] ml-5 mt-1 text-white bg-[#e03] rounded-t">
+                                                                        <RatingText rating={ratingService}/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="flex items-center justify-between pr-5 pl-[10px]">
+                                                                <span className="flex-1 text-base">Giá cả</span>
+                                                                <div className="flex-[2] text-3xl">
+                                                                    <RatingStar handleRating={handleRatingPrice} rating={ratingPrice} />
+                                                                </div>
+                                                                <div className="flex-1">
+                                                                    <div className="relative inline-block text-base font-medium h-8 leading-8 pr-3 pl-[6px] ml-5 mt-1 text-white bg-[#e03] rounded-t">
+                                                                        <RatingText rating={ratingPrice}/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div> 
+                                                        <div className="mb-2">
+                                                            <h3 className="text-base text-[#898c95] mb-2">Đánh giá của bạn</h3>
+                                                            <div className="w-full mb-[10px]">
+                                                                <input type="text" className="outline-0 w-full px-[11px] py-1 rounded-md text-base text-black border border-solid border-[#e5e5e5]" value="Đánh giá của Ke hoc viec cho EEBakery Coffee"/>
+                                                            </div>
+                                                        </div>                                                
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="col l-4">
-
+                                    <div className="sticky top-[73px] mb-5">
+                                        <div className="mb-5 p-4 bg-white rounded-[10px] shadow-lg">
+                                            <div>
+                                                <div className="flex items-center justify-center mb-2">
+                                                    <b className="block text-2xl text-center py-2 px-4 mr-1 text-white bg-[#e03] rounded-md">0</b>
+                                                    <div className="">
+                                                        <h2 className="text-xl font-medium">Chưa có đánh giá</h2>
+                                                        <span className="text-sm">
+                                                            /5 {" "} (0{" "} đánh giá)
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div className="relative">
+                                                    {/* <div className="absolute flex items-center justify-center top-0 left-0 right-0 bottom-0 z-1 bg-[hsla(0,0%,100%,.65)]">
+                                                    <button className="button-review-animation text-[#e03] bg-transparent border-[#e03] border-4 border-solid cursor-pointer py-[10px] px-4 font-bold flex items-center justify-center rounded-md outline-0">Đánh giá ngay</button>
+                                                </div> */}
+                                                    <div className="flex items-center justify-between text-base mb-[6px]">
+                                                        <span className="basis-[30%]">Vị trí</span>
+                                                        <div className="basis-[65%] w-full">
+                                                            <div className="w-full h-2 bg-[#e03] rounded-[2em]"></div>
+                                                        </div>
+                                                        <span className="basis-[5%] ml-5 font-medium text-right">5.0</span>
+                                                    </div>
+                                                    <div className="flex items-center justify-between text-base mb-[6px]">
+                                                        <span className="basis-[30%]">Không gian</span>
+                                                        <div className="basis-[65%] w-full">
+                                                            <div className="w-full h-2 bg-[#e03] rounded-[2em]"></div>
+                                                        </div>
+                                                        <span className="basis-[5%] ml-5 font-medium text-right">5.0</span>
+                                                    </div>
+                                                    <div className="flex items-center justify-between text-base mb-[6px]">
+                                                        <span className="basis-[30%]">Đồ uống</span>
+                                                        <div className="basis-[65%] w-full">
+                                                            <div className="w-full h-2 bg-[#e03] rounded-[2em]"></div>
+                                                        </div>
+                                                        <span className="basis-[5%] ml-5 font-medium text-right">5.0</span>
+                                                    </div>
+                                                    <div className="flex items-center justify-between text-base mb-[6px]">
+                                                        <span className="basis-[30%]">Phục vụ</span>
+                                                        <div className="basis-[65%] w-full">
+                                                            <div className="w-full h-2 bg-[#e03] rounded-[2em]"></div>
+                                                        </div>
+                                                        <span className="basis-[5%] ml-5 font-medium text-right">5.0</span>
+                                                    </div>
+                                                    <div className="flex items-center justify-between text-base mb-[6px]">
+                                                        <span className="basis-[30%]">Giá cả</span>
+                                                        <div className="basis-[65%] w-full">
+                                                            <div className="w-full h-2 bg-[#e03] rounded-[2em]"></div>
+                                                        </div>
+                                                        <span className="basis-[5%] ml-5 font-medium text-right">5.0</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="mb-5 p-4 bg-white rounded-[10px] shadow-lg">
+                                            <div className="flex flex-col justify-between">
+                                                <div className="mt-2">
+                                                    <div className="flex items-center justify-start text-base mb-[6px]">
+                                                        <MdAttachMoney className="inline-block text-xl text-center" />
+                                                        <span className="inline-block pl-[14px]">35.000đ - 45.000đ</span>
+                                                    </div>
+                                                    <div className="flex items-center justify-start text-base mb-[6px]">
+                                                        <BsClock className="inline-block text-xl text-center" />
+                                                        <div className="pl-[14px]">
+                                                            <span className="font-semibold text-[#00b707]">Đang mở cửa</span>
+                                                            {" "}
+                                                            - {" "}
+                                                            <span className="cursor-pointer">
+                                                                08:00 - 22:00
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex items-center justify-start text-base mb-[6px]">
+                                                        <AiOutlineMail className="inline-block text-xl text-center" />
+                                                        <a href="mailto:sunnygardencoffee@gmail.com" className="cursor-pointer inline-block pl-[14px]">sunnygardencoffee@gmail.com</a>
+                                                    </div>
+                                                    <div className="flex items-center justify-start text-base mb-[6px]">
+                                                        <FaFacebookSquare className="inline-block text-xl text-center" />
+                                                        <Link to="/" target="blank" className="hover:decoration-solid hover:decoration-[#0770cd] hover:underline inline-block pl-[14px] text-[#0770cd]">Sunny Garden Coffee Shop</Link>
+                                                    </div>
+                                                    <div className="flex items-center justify-start text-base mb-[6px]">
+                                                        <BsInstagram className="inline-block text-xl text-center" />
+                                                        <Link to="/" target="blank" className="hover:decoration-solid hover:decoration-[#0770cd] hover:underline inline-block pl-[14px] text-[#0770cd]">sunnygardencofffeehanoi</Link>
+                                                    </div>
+                                                    <div className="flex items-center justify-start text-base mb-[6px]" >
+                                                        <BsTags className="inline-block text-xl text-center" />
+                                                        <div className="flex flex-wrap pl-[14px]">
+                                                            <Link to="/" className="tags-after flex items-center justify-center hover:decoration-solid hover:decoration-[#0770cd] hover:underline">
+                                                                <span className="text-[#0770cd]">Cafe Vườn</span>
+                                                            </Link>
+                                                            <Link to="/" className="hover:decoration-solid hover:decoration-[#0770cd] hover:underline">
+                                                                <span className="text-[#0770cd]">Cafe View Đẹp</span>
+                                                            </Link>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="related" className="relative px-4 py-2 mb-5 bg-white rounded-[10px] shadow-lg">
+                            <div className="flex items-center justify-between mb-1">
+                                <h2 className="text-3xl font-medium">Địa điểm lân cận</h2>
+                                <Link to="/" className="leading-9 hover:decoration-solid hover:decoration-[#e03] hover:underline text-[#e03] text-lg">
+                                    Xem thêm
+                                </Link>
+                            </div>
+                            <div className="w-full bg-[#eee] overflow-hidden cursor-pointer h-[400px] mb-1 rounded-md shadow-lg">
+                                <div className="relative w-full h-full">
+                                    <div className="absolute top-0 left-0 w-full h-full">
+                                        <img src="https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/static/pin-s-cafe+285A98(105.8521943,21.033235),pin-s-cafe+285A98(105.8519879,21.0329604),pin-s-cafe+285A98(105.8534812,21.0343596),pin-s-cafe+285A98(105.85178345,21.03211195),pin-s-cafe+285A98(105.8523434,21.0320098),pin-s-cafe+285A98(105.8528733,21.0354897),pin-l-cafe+EE0033(105.8519535,21.0337899)/105.8519535,21.0337899,14,0/1136x400?access_token=pk.eyJ1IjoiaG9haXBoYW4iLCJhIjoiY2s4NjRuNm40MGUweDNwcGZ4azZhMTA1MCJ9.rExJxHGtG7JXWJwEjJTTCg" alt="" className="object-cover w-full h-full" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div style={{ scrollSnapType: "x mandatory" }} className="flex items-center justify-start overflow-x-auto overflow-y-hidden whitespace-nowrap pr-[6px] pb-4 mt-3 mb-[-10px] ml-[-12px] mr-[-6px] snap-always">
+                                <div className="w-1/4 shrink-0 mb-[-10px] snap-start">
+                                    <Link to="/" className="img-hover" >
+                                        <div className="relative block mb-3 ml-3 bg-white rounded-md shadow-lg cursor-pointer">
+                                            <div className="w-full overflow-hidden h-[200px] rounded-tl-md rounded-tr-md ">
+                                                <div className="relative w-full h-full overflow-hidden bg-img-slider-container">
+                                                    <div className="absolute top-0 left-0 w-full h-full">
+                                                        <img src="https://toidicafe.vn/static/images/place/skyline-hanoi/skyline-hanoi-avatar-1648268319055.png?w=960" alt="" className="object-cover w-full h-full rounded-tl-md rounded-tr-md bg-img-slider " />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="py-[2px] px-[15px]">
+                                                <h3 className="text-lg font-bold pt-[6px] pb-[2px] overflow-hidden whitespace-nowrap text-ellipsis">The XX - Coffe bar</h3>
+                                                <div className="text-back text-sm pb-[6px] overflow-hidden whitespace-nowrap text-ellipsis" >136 Hồ Tùng Mậu (332 Hoàng Công Chất), Bắc Từ Liêm</div>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                </div>
+                                <div className="w-1/4 shrink-0 mb-[-10px] snap-start">
+                                    <Link to="/" className="img-hover" >
+                                        <div className="relative block mb-3 ml-3 bg-white rounded-md shadow-lg cursor-pointer">
+                                            <div className="w-full overflow-hidden h-[200px] rounded-tl-md rounded-tr-md ">
+                                                <div className="relative w-full h-full overflow-hidden bg-img-slider-container">
+                                                    <div className="absolute top-0 left-0 w-full h-full">
+                                                        <img src="https://toidicafe.vn/static/images/place/skyline-hanoi/skyline-hanoi-avatar-1648268319055.png?w=960" alt="" className="object-cover w-full h-full rounded-tl-md rounded-tr-md bg-img-slider " />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="py-[2px] px-[15px]">
+                                                <h3 className="text-lg font-bold pt-[6px] pb-[2px] overflow-hidden whitespace-nowrap text-ellipsis">The XX - Coffe bar</h3>
+                                                <div className="text-back text-sm pb-[6px] overflow-hidden whitespace-nowrap text-ellipsis" >136 Hồ Tùng Mậu (332 Hoàng Công Chất), Bắc Từ Liêm</div>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                </div>
+                                <div className="w-1/4 shrink-0 mb-[-10px] snap-start">
+                                    <Link to="/" className="img-hover" >
+                                        <div className="relative block mb-3 ml-3 bg-white rounded-md shadow-lg cursor-pointer">
+                                            <div className="w-full overflow-hidden h-[200px] rounded-tl-md rounded-tr-md ">
+                                                <div className="relative w-full h-full overflow-hidden bg-img-slider-container">
+                                                    <div className="absolute top-0 left-0 w-full h-full">
+                                                        <img src="https://toidicafe.vn/static/images/place/skyline-hanoi/skyline-hanoi-avatar-1648268319055.png?w=960" alt="" className="object-cover w-full h-full rounded-tl-md rounded-tr-md bg-img-slider " />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="py-[2px] px-[15px]">
+                                                <h3 className="text-lg font-bold pt-[6px] pb-[2px] overflow-hidden whitespace-nowrap text-ellipsis">The XX - Coffe bar</h3>
+                                                <div className="text-back text-sm pb-[6px] overflow-hidden whitespace-nowrap text-ellipsis" >136 Hồ Tùng Mậu (332 Hoàng Công Chất), Bắc Từ Liêm</div>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                </div>
+                                <div className="w-1/4 shrink-0 mb-[-10px] snap-start">
+                                    <Link to="/" className="img-hover" >
+                                        <div className="relative block mb-3 ml-3 bg-white rounded-md shadow-lg cursor-pointer">
+                                            <div className="w-full overflow-hidden h-[200px] rounded-tl-md rounded-tr-md ">
+                                                <div className="relative w-full h-full overflow-hidden bg-img-slider-container">
+                                                    <div className="absolute top-0 left-0 w-full h-full">
+                                                        <img src="https://toidicafe.vn/static/images/place/skyline-hanoi/skyline-hanoi-avatar-1648268319055.png?w=960" alt="" className="object-cover w-full h-full rounded-tl-md rounded-tr-md bg-img-slider " />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="py-[2px] px-[15px]">
+                                                <h3 className="text-lg font-bold pt-[6px] pb-[2px] overflow-hidden whitespace-nowrap text-ellipsis">The XX - Coffe bar</h3>
+                                                <div className="text-back text-sm pb-[6px] overflow-hidden whitespace-nowrap text-ellipsis" >136 Hồ Tùng Mậu (332 Hoàng Công Chất), Bắc Từ Liêm</div>
+                                            </div>
+                                        </div>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
