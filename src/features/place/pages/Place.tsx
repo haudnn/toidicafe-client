@@ -1,69 +1,31 @@
-import React, { useState} from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import ReadMore from '../components/ReadMore'
+
+import Review from '../components/Review'
 import "keen-slider/keen-slider.min.css"
-
-
 import useSlider from '../../../hooks/useSlider'
 import useOnScroll from '../../../hooks/useOnScroll'
-
+import useToggle from '../../../hooks/useToggle'
 import { BsBookmark, BsCardImage, BsClock, BsInstagram, BsTags, BsCloudSun, BsCreditCard2Front, BsCheckCircleFill } from 'react-icons/bs'
 import { GoLocation } from 'react-icons/go'
 import { MdAttachMoney, MdOutlineDirections } from 'react-icons/md'
 import { AiOutlineMail, AiOutlineWifi } from 'react-icons/ai'
-import { FaFacebookSquare, FaCarAlt, FaShippingFast, FaPaw, FaBaby, FaHeart, FaEdit, FaRegHeart, FaTimes } from 'react-icons/fa'
+import { FaFacebookSquare, FaCarAlt, FaShippingFast, FaPaw, FaBaby, FaHeart, FaEdit, FaRegHeart} from 'react-icons/fa'
 import { GiCakeSlice, GiWindyStripes } from 'react-icons/gi'
 import { BiDotsHorizontalRounded } from 'react-icons/bi'
-import RatingStar from '../components/RatingStar'
-import RatingText from '../components/RatingText'
-
-
+import navPlace from '../../../constants/navPlace'
+import ReadMore from '../../../components/Common/ReadMore'
 const Place = () => {
     const sliderRef = useSlider(6)
     const visible = useOnScroll(300)
-    const [ratingPosition, setRatingPosition] = useState(0)
-    const [ratingSpace, setRatingSpace] = useState(0)
-    const [ratingPrice, setRatingPrice] = useState(0)
-    const [ratingDrinks, setRatingDrinks] = useState(0)
-    const [ratingService, setRatingService] = useState(0)
-
     const [activeTab, setActiveTab] = useState<Number>(0);
-    const nav = [
-        {
-            name: "Hình ảnh",
-            path: "#galery",
-        },
-        {
-            name: "Tổng quan",
-            path: "#detail",
-        },
-        {
-
-            name: "Tiện ích",
-            path: "#benefit",
-        },
-        {
-
-            name: "Đánh giá",
-            path: "#review",
-        },
-        {
-            name: "Lân cận",
-            path: "#related",
-        },
-    ];
+    const {isToggle, handleToggle} =  useToggle()
     const handleActiveTab = (i: number) => {
         setActiveTab(i);
     }
-    const handleRatingPosition = (rate: number) => setRatingPosition(rate)
-    const handleRatingSpace = (rate: number) => setRatingSpace(rate)
-    const handleRatingDrinks = (rate: number) => setRatingDrinks(rate)
-    const handleRatingService = (rate: number) => setRatingService(rate)
-    const handleRatingPrice = (rate: number) => setRatingPrice(rate)
-
     return (
-        <div className="place ">
-            <div className="w-full calc-place-height">
+        <div className="place">
+            <div className="layout-main">
                 <div className="pt-[10px]">
                     <div className="grid wide">
                         <div className={`${visible ? "visible opacity-100 " : "invisible opacity-0 "}fixed top-0 left-0 bottom-auto right-auto z-10  w-full bg-white shadow-lg custom-transition-header `}>
@@ -72,7 +34,7 @@ const Place = () => {
                                     <nav>
                                         <ul className="flex">
                                             {
-                                                nav.map(({ name, path }, i) => (
+                                                navPlace.map(({ name, path }, i) => (
                                                     <li key={i} className="text-base cursor-pointer h-full leading-[1.143] pr-5">
                                                         <a onClick={() => handleActiveTab(i)} href={path} className={`${activeTab === i ? "text-[#e03] border-[#e03] border-b-2 border-solid " : " "} p-3  block font-medium `}>
                                                             {name}
@@ -324,7 +286,7 @@ const Place = () => {
                                                 {" "}
                                                 <span className="text-[#8a8a8a]">(1)</span>
                                             </h2>
-                                            <button className="hover:bg-[#be0129] flex items-center justify-center rounded-md bg-[#e03] text-white font-medium text-base p-2">Viết đánh giá</button>
+                                            <button onClick={handleToggle} className="hover:bg-[#be0129] flex items-center justify-center rounded-md bg-[#e03] text-white font-medium text-base p-2">Viết đánh giá</button>
                                         </div>
                                         <div className="arrow-review flex items-center justify-between h-[180px] py-[10px] px-4 relative rounded-xl bg-[linear-gradient(90deg,#ffb8b8,#ffddd8)]">
                                             <div className="w-[30%] h-full text-center relative">
@@ -486,87 +448,8 @@ const Place = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        {/* modal review */}
-                                        <div className="fixed top-0 bottom-0 left-0 right-0 w-full h-full bg-[rgba(0,0,0,0.65)] z-50">
-                                            <div className="absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center ">
-                                                <div className="w-[610px] relative max-h-[96%] flex flex-col flex-nowrap text-black overflow-hidden bg-white shadow-lg">
-                                                    <div className="h-[50px] px-10 w-full shrink-0 text-center border-b border-solid border-[rgba(0,0,0,0.1)]">
-                                                        <div className="flex items-center justify-center h-full">
-                                                            <h2 className="overflow-hidden text-lg font-bold text-black whitespace-nowrap text-ellipsis">Đánh giá EEBakery Coffee</h2>
-                                                        </div>
-                                                        <div className="w-[30px] h-[30px] text-lg absolute top-[10px] right-[10px] flex items-center justify-center bottom-auto left-auto cursor-pointer text-[#666] bg-[#e4e6eb] rounded-[50%]">
-                                                            <FaTimes />
-                                                        </div>
-                                                    </div>
-                                                    <div className="grow min-h-[200px] overflow-y-auto p-4">
-                                                        <div className="mb-3">
-                                                            <h3 className="text-base text-[#898c95]">Xếp hạng của bạn</h3>
-                                                            <div className="flex items-center justify-between pr-5 pl-[10px]">
-                                                                <span className="flex-1 text-base">Vị trí</span>
-                                                                <div className="flex-[2] text-3xl">
-                                                                    <RatingStar handleRating={handleRatingPosition} rating={ratingPosition} />
-                                                                </div>
-                                                                <div className="flex-1">
-                                                                    <div className="relative inline-block text-base font-medium h-8 leading-8 pr-3 pl-[6px] ml-5 mt-1 text-white bg-[#e03] rounded-t">
-                                                                        <RatingText rating={ratingPosition}/>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="flex items-center justify-between pr-5 pl-[10px]">
-                                                                <span className="flex-1 text-base">Không gian</span>
-                                                                <div className="flex-[2] text-3xl">
-                                                                    <RatingStar handleRating={handleRatingSpace} rating={ratingSpace} />
-                                                                </div>
-                                                                <div className="flex-1">
-                                                                    <div className="relative inline-block text-base font-medium h-8 leading-8 pr-3 pl-[6px] ml-5 mt-1 text-white bg-[#e03] rounded-t">
-                                                                        <RatingText rating={ratingSpace}/>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="flex items-center justify-between pr-5 pl-[10px]">
-                                                                <span className="flex-1 text-base">Đồ uống</span>
-                                                                <div className="flex-[2] text-3xl">
-                                                                    <RatingStar handleRating={handleRatingDrinks} rating={ratingDrinks} />
-                                                                </div>
-                                                                <div className="flex-1">
-                                                                    <div className="relative inline-block text-base font-medium h-8 leading-8 pr-3 pl-[6px] ml-5 mt-1 text-white bg-[#e03] rounded-t">
-                                                                        <RatingText rating={ratingDrinks}/>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="flex items-center justify-between pr-5 pl-[10px]">
-                                                                <span className="flex-1 text-base">Phục vụ</span>
-                                                                <div className="flex-[2] text-3xl">
-                                                                    <RatingStar handleRating={handleRatingService} rating={ratingService} />
-                                                                </div>
-                                                                <div className="flex-1">
-                                                                    <div className="relative inline-block text-base font-medium h-8 leading-8 pr-3 pl-[6px] ml-5 mt-1 text-white bg-[#e03] rounded-t">
-                                                                        <RatingText rating={ratingService}/>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="flex items-center justify-between pr-5 pl-[10px]">
-                                                                <span className="flex-1 text-base">Giá cả</span>
-                                                                <div className="flex-[2] text-3xl">
-                                                                    <RatingStar handleRating={handleRatingPrice} rating={ratingPrice} />
-                                                                </div>
-                                                                <div className="flex-1">
-                                                                    <div className="relative inline-block text-base font-medium h-8 leading-8 pr-3 pl-[6px] ml-5 mt-1 text-white bg-[#e03] rounded-t">
-                                                                        <RatingText rating={ratingPrice}/>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div> 
-                                                        <div className="mb-2">
-                                                            <h3 className="text-base text-[#898c95] mb-2">Đánh giá của bạn</h3>
-                                                            <div className="w-full mb-[10px]">
-                                                                <input type="text" className="outline-0 w-full px-[11px] py-1 rounded-md text-base text-black border border-solid border-[#e5e5e5]" value="Đánh giá của Ke hoc viec cho EEBakery Coffee"/>
-                                                            </div>
-                                                        </div>                                                
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                       
+                                        <Review isOpenReview={isToggle} handleOpenReview={handleToggle}/>
                                     </div>
                                 </div>
                                 <div className="col l-4">
