@@ -15,7 +15,7 @@ const Auth = () => {
     setIsShowRegister(prev => !prev)
   }
   return (
-    <div className="fixed inset-0 flex items-center justify-center w-[100vw] h-screen z-[100] bg-[rgba(0,0,0,.65)]">
+    <div className=" fixed inset-0 flex items-center justify-center w-[100vw] h-screen z-[100] bg-[rgba(0,0,0,.65)]">
       <div className="relative flex text-black overflow-hidden bg-white rounded-[10px] shadow-lg">
         <div onClick={handleHideAuthForm} className="absolute top-[10px] right-4 bottom-auto left-auto cursor-pointer text-2xl text-[#717171]">
           <AiOutlineClose />
