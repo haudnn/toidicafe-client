@@ -22,7 +22,7 @@ const routes = [
     component: <Explore/>,
   },
   {
-    path: '/profile/tonghopdanhgia',
+    path: '/profile/:username',
     component: <Profile/>,
   },
 ];

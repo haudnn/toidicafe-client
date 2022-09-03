@@ -2,7 +2,6 @@ import { Action, combineReducers, configureStore, ThunkAction } from '@reduxjs/t
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './rootSaga';
 import authReducer from '../features/auth/authSlice';
-
 const rootReducer = combineReducers({
   auth: authReducer,
 });

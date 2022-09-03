@@ -42,6 +42,7 @@ const initialState: AuthState = {
       },
       registerFailed(state, action: PayloadAction<string>) {
         state.logging = false;
+        state.error = action.payload
       },
       logout(state) {
         state.currentUser = undefined;

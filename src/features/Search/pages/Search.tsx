@@ -1,14 +1,24 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { RiArrowDownSLine } from 'react-icons/ri'
 import { AiOutlineClose, AiOutlineStar, AiFillStar } from 'react-icons/ai'
 import { MdAttachMoney } from 'react-icons/md'
 import { GoLocation } from 'react-icons/go'
 import { BsClock, BsBookmark } from 'react-icons/bs'
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
-
+import { useFetch } from '../../../hooks/'
 import { Link } from 'react-router-dom'
+import Skeleton from '../../../components/Common/Skeleton'
+import { areaList } from '../../../constants'
 
 const Search = () => {
+    const [shopList, setShopList] = useState<Array<any>>([])
+    const { isLoading, result } = useFetch("shops/?page=1")
+    useEffect(() => {
+        if (result) {
+            const { shops } = result
+            setShopList(shops)
+        }
+    }, [result])
     return (
         <div className="search">
             <div className="w-full min-h-screen">
@@ -51,34 +61,14 @@ const Search = () => {
                                             </div>
                                             <div className="p-[10px]">
                                                 <div className="max-h-[160px] overflow-y-auto custom-scrollbar">
-                                                    <div className="mb-[10px]">
-                                                        <input id="hai-chau" type="checkbox" />
-                                                        <label className="text-base" htmlFor="hai-chau">Quận Hải Châu</label>
-                                                    </div>
-                                                    <div className="mb-[10px]">
-                                                        <input id="son-tra" type="checkbox" />
-                                                        <label className="text-base" htmlFor="son-tra">Quận Sơn Trà</label>
-                                                    </div>
-                                                    <div className="mb-[10px]">
-                                                        <input id="thanh-khe" type="checkbox" />
-                                                        <label className="text-base" htmlFor="thanh-khe">Quận Thanh Khê</label>
-                                                    </div>
-                                                    <div className="mb-[10px]">
-                                                        <input id="cam-le" type="checkbox" />
-                                                        <label className="text-base" htmlFor="cam-le">Quận Cẩm Lệ</label>
-                                                    </div>
-                                                    <div className="mb-[10px]">
-                                                        <input id="lien-chieu" type="checkbox" />
-                                                        <label className="text-base" htmlFor="lien-chieu">Quận Liên Chiểu.</label>
-                                                    </div>
-                                                    <div className="mb-[10px]">
-                                                        <input id="ngu-hanh-son" type="checkbox" />
-                                                        <label className="text-base" htmlFor="ngu-hanh-son">Quận Ngũ Hành Sơn.</label>
-                                                    </div>
-                                                    <div className="mb-[10px]">
-                                                        <input id="son-tra" type="checkbox" />
-                                                        <label className="text-base" htmlFor="son-tra">Quận Sơn Trà</label>
-                                                    </div>
+                                                    {
+                                                        areaList.map((area, index) => (
+                                                            <div key={index} className="mb-[10px]">
+                                                                <input id={area} type="checkbox" name={area} />
+                                                                <label className="text-base" htmlFor={area}>Quận {area}</label>
+                                                            </div>
+                                                        ))
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -263,487 +253,62 @@ const Search = () => {
                                         </div>
                                     </div>
                                     <div className="min-h-[50vh] relative">
+                                        {isLoading && <Skeleton></Skeleton>}
                                         <div>
-                                            <div className="mb-5">
-                                                <div className="relative flex bg-white rounded-lg shadow-md">
-                                                    <Link target="blank" to="/" className="py-2 pl-2">
-                                                        <div className="w-[270px] h-full overflow-hidden rounded">
-                                                            <div className="relative w-full h-full overflow-hidden">
-                                                                <div className="absolute top-0 left-0 w-full h-full">
-                                                                    <img src="https://toidicafe.vn/static/images/2022/06/18/73d995a3-96a0-4c84-b880-febaf69e1454-284476309_103880252358724_7819.jpeg" srcSet="https://toidicafe.vn/static/images/2022/06/18/73d995a3-96a0-4c84-b880-febaf69e1454-284476309_103880252358724_7819.jpeg 2x" alt="" className="object-cover w-full h-full " />
+                                            {
+                                                shopList.map((shop, index) =>
+                                                (
+                                                    <div key={index} className="mb-5">
+                                                        <div className="relative flex bg-white rounded-lg shadow-md">
+                                                            <Link target="blank" to="/" className="py-2 pl-2">
+                                                                <div className="w-[270px] h-full overflow-hidden rounded">
+                                                                    <div className="relative w-full h-full overflow-hidden">
+                                                                        <div className="absolute top-0 left-0 w-full h-full">
+                                                                            <img src={shop.images[0]} alt="" className="object-cover w-full h-full " />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </Link>
+                                                            <div className="flex-shrink flex-grow pt-[6px] px-6 pb-6 min-h-[200px]">
+                                                                <Link target="blank" to="/">
+                                                                    <h4 className="text-xl font-bold pt-[6px] pb-1">{shop.name}</h4>
+                                                                </Link>
+                                                                <div className="text-base pt-[2px]">
+                                                                    <span className="text-[#e03] mr-[6px]">
+                                                                        <AiOutlineStar className="inline-block text-2xl" />
+                                                                        <AiOutlineStar className="inline-block text-2xl" />
+                                                                        <AiOutlineStar className="inline-block text-2xl" />
+                                                                        <AiOutlineStar className="inline-block text-2xl" />
+                                                                        <AiOutlineStar className="inline-block text-2xl" />
+                                                                    </span>
+                                                                    {"- "}
+                                                                    chưa có đánh giá
+                                                                </div>
+                                                                <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
+                                                                    <MdAttachMoney className="inline-block text-xl" />
+                                                                    {shop.priceMin}đ - {shop.priceMax}đ
+                                                                </div>
+                                                                <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
+                                                                    <GoLocation className="inline-block text-xl" />
+                                                                    {shop.location}
+                                                                </div>
+                                                                <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
+                                                                    <BsClock className="inline-block text-xl" />
+                                                                    <span className="font-bold text-[#00b707]">Đang mở cửa</span>
+                                                                    - {""}
+                                                                    {shop.timeOpen} - {shop.timeClose}
+                                                                </div>
+                                                            </div>
+                                                            <div className="absolute top-2 right-[10px] bottom-auto left-auto">
+                                                                <div className="hover:text-[#e03] flex items-center justify-center relative cursor-pointer w-9 h-9 font-lg text-black bg-white rounded-[50%] shadow-md">
+                                                                    <BsBookmark></BsBookmark>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </Link>
-                                                    <div className="flex-shrink flex-grow pt-[6px] px-6 pb-6 min-h-[200px]">
-                                                        <Link target="blank" to="/">
-                                                            <h4 className="text-xl font-bold pt-[6px] pb-1">EEBakery Coffee</h4>
-                                                        </Link>
-                                                        <div className="text-base pt-[2px]">
-                                                            <span className="text-[#e03] mr-[6px]">
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                            </span>
-                                                            {"- "}
-                                                            chưa có đánh giá
-                                                        </div>
-                                                        <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                                            <MdAttachMoney className="inline-block text-xl" />
-                                                            30.000đ - 60.000đ
-                                                        </div>
-                                                        <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                                            <GoLocation className="inline-block text-xl" />
-                                                            8 Ngõ 24 Đào Tấn, Ba Đình
-                                                        </div>
-                                                        <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                                            <BsClock className="inline-block text-xl" />
-                                                            <span className="font-bold text-[#00b707]">Đang mở cửa</span>
-                                                            - {""}
-                                                            07:00 - 23:00
-                                                        </div>
                                                     </div>
-                                                    <div className="absolute top-2 right-[10px] bottom-auto left-auto">
-                                                        <div className="hover:text-[#e03] flex items-center justify-center relative cursor-pointer w-9 h-9 font-lg text-black bg-white rounded-[50%] shadow-md">
-                                                            <BsBookmark></BsBookmark>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="mb-5">
-                                                <div className="relative flex bg-white rounded-lg shadow-md">
-                                                    <Link target="blank" to="/" className="py-2 pl-2">
-                                                        <div className="w-[270px] h-full overflow-hidden rounded">
-                                                            <div className="relative w-full h-full overflow-hidden">
-                                                                <div className="absolute top-0 left-0 w-full h-full">
-                                                                    <img src="https://toidicafe.vn/static/images/2022/06/18/73d995a3-96a0-4c84-b880-febaf69e1454-284476309_103880252358724_7819.jpeg" srcSet="https://toidicafe.vn/static/images/2022/06/18/73d995a3-96a0-4c84-b880-febaf69e1454-284476309_103880252358724_7819.jpeg 2x" alt="" className="object-cover w-full h-full " />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </Link>
-                                                    <div className="flex-shrink flex-grow pt-[6px] px-6 pb-6 min-h-[200px]">
-                                                        <Link target="blank" to="/">
-                                                            <h4 className="text-xl font-bold pt-[6px] pb-1">EEBakery Coffee</h4>
-                                                        </Link>
-                                                        <div className="text-base pt-[2px]">
-                                                            <span className="text-[#e03] mr-[6px]">
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                            </span>
-                                                            {"- "}
-                                                            chưa có đánh giá
-                                                        </div>
-                                                        <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                                            <MdAttachMoney className="inline-block text-xl" />
-                                                            30.000đ - 60.000đ
-                                                        </div>
-                                                        <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                                            <GoLocation className="inline-block text-xl" />
-                                                            8 Ngõ 24 Đào Tấn, Ba Đình
-                                                        </div>
-                                                        <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                                            <BsClock className="inline-block text-xl" />
-                                                            <span className="font-bold text-[#00b707]">Đang mở cửa</span>
-                                                            - {""}
-                                                            07:00 - 23:00
-                                                        </div>
-                                                    </div>
-                                                    <div className="absolute top-2 right-[10px] bottom-auto left-auto">
-                                                        <div className="hover:text-[#e03] flex items-center justify-center relative cursor-pointer w-9 h-9 font-lg text-black bg-white rounded-[50%] shadow-md">
-                                                            <BsBookmark></BsBookmark>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="mb-5">
-                                                <div className="relative flex bg-white rounded-lg shadow-md">
-                                                    <Link target="blank" to="/" className="py-2 pl-2">
-                                                        <div className="w-[270px] h-full overflow-hidden rounded">
-                                                            <div className="relative w-full h-full overflow-hidden">
-                                                                <div className="absolute top-0 left-0 w-full h-full">
-                                                                    <img src="https://toidicafe.vn/static/images/2022/06/18/73d995a3-96a0-4c84-b880-febaf69e1454-284476309_103880252358724_7819.jpeg" srcSet="https://toidicafe.vn/static/images/2022/06/18/73d995a3-96a0-4c84-b880-febaf69e1454-284476309_103880252358724_7819.jpeg 2x" alt="" className="object-cover w-full h-full " />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </Link>
-                                                    <div className="flex-shrink flex-grow pt-[6px] px-6 pb-6 min-h-[200px]">
-                                                        <Link target="blank" to="/">
-                                                            <h4 className="text-xl font-bold pt-[6px] pb-1">EEBakery Coffee</h4>
-                                                        </Link>
-                                                        <div className="text-base pt-[2px]">
-                                                            <span className="text-[#e03] mr-[6px]">
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                            </span>
-                                                            {"- "}
-                                                            chưa có đánh giá
-                                                        </div>
-                                                        <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                                            <MdAttachMoney className="inline-block text-xl" />
-                                                            30.000đ - 60.000đ
-                                                        </div>
-                                                        <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                                            <GoLocation className="inline-block text-xl" />
-                                                            8 Ngõ 24 Đào Tấn, Ba Đình
-                                                        </div>
-                                                        <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                                            <BsClock className="inline-block text-xl" />
-                                                            <span className="font-bold text-[#00b707]">Đang mở cửa</span>
-                                                            - {""}
-                                                            07:00 - 23:00
-                                                        </div>
-                                                    </div>
-                                                    <div className="absolute top-2 right-[10px] bottom-auto left-auto">
-                                                        <div className="hover:text-[#e03] flex items-center justify-center relative cursor-pointer w-9 h-9 font-lg text-black bg-white rounded-[50%] shadow-md">
-                                                            <BsBookmark></BsBookmark>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="mb-5">
-                                                <div className="relative flex bg-white rounded-lg shadow-md">
-                                                    <Link target="blank" to="/" className="py-2 pl-2">
-                                                        <div className="w-[270px] h-full overflow-hidden rounded">
-                                                            <div className="relative w-full h-full overflow-hidden">
-                                                                <div className="absolute top-0 left-0 w-full h-full">
-                                                                    <img src="https://toidicafe.vn/static/images/2022/06/18/73d995a3-96a0-4c84-b880-febaf69e1454-284476309_103880252358724_7819.jpeg" srcSet="https://toidicafe.vn/static/images/2022/06/18/73d995a3-96a0-4c84-b880-febaf69e1454-284476309_103880252358724_7819.jpeg 2x" alt="" className="object-cover w-full h-full " />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </Link>
-                                                    <div className="flex-shrink flex-grow pt-[6px] px-6 pb-6 min-h-[200px]">
-                                                        <Link target="blank" to="/">
-                                                            <h4 className="text-xl font-bold pt-[6px] pb-1">EEBakery Coffee</h4>
-                                                        </Link>
-                                                        <div className="text-base pt-[2px]">
-                                                            <span className="text-[#e03] mr-[6px]">
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                            </span>
-                                                            {"- "}
-                                                            chưa có đánh giá
-                                                        </div>
-                                                        <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                                            <MdAttachMoney className="inline-block text-xl" />
-                                                            30.000đ - 60.000đ
-                                                        </div>
-                                                        <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                                            <GoLocation className="inline-block text-xl" />
-                                                            8 Ngõ 24 Đào Tấn, Ba Đình
-                                                        </div>
-                                                        <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                                            <BsClock className="inline-block text-xl" />
-                                                            <span className="font-bold text-[#00b707]">Đang mở cửa</span>
-                                                            - {""}
-                                                            07:00 - 23:00
-                                                        </div>
-                                                    </div>
-                                                    <div className="absolute top-2 right-[10px] bottom-auto left-auto">
-                                                        <div className="hover:text-[#e03] flex items-center justify-center relative cursor-pointer w-9 h-9 font-lg text-black bg-white rounded-[50%] shadow-md">
-                                                            <BsBookmark></BsBookmark>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="mb-5">
-                                                <div className="relative flex bg-white rounded-lg shadow-md">
-                                                    <Link target="blank" to="/" className="py-2 pl-2">
-                                                        <div className="w-[270px] h-full overflow-hidden rounded">
-                                                            <div className="relative w-full h-full overflow-hidden">
-                                                                <div className="absolute top-0 left-0 w-full h-full">
-                                                                    <img src="https://toidicafe.vn/static/images/2022/06/18/73d995a3-96a0-4c84-b880-febaf69e1454-284476309_103880252358724_7819.jpeg" srcSet="https://toidicafe.vn/static/images/2022/06/18/73d995a3-96a0-4c84-b880-febaf69e1454-284476309_103880252358724_7819.jpeg 2x" alt="" className="object-cover w-full h-full " />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </Link>
-                                                    <div className="flex-shrink flex-grow pt-[6px] px-6 pb-6 min-h-[200px]">
-                                                        <Link target="blank" to="/">
-                                                            <h4 className="text-xl font-bold pt-[6px] pb-1">EEBakery Coffee</h4>
-                                                        </Link>
-                                                        <div className="text-base pt-[2px]">
-                                                            <span className="text-[#e03] mr-[6px]">
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                            </span>
-                                                            {"- "}
-                                                            chưa có đánh giá
-                                                        </div>
-                                                        <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                                            <MdAttachMoney className="inline-block text-xl" />
-                                                            30.000đ - 60.000đ
-                                                        </div>
-                                                        <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                                            <GoLocation className="inline-block text-xl" />
-                                                            8 Ngõ 24 Đào Tấn, Ba Đình
-                                                        </div>
-                                                        <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                                            <BsClock className="inline-block text-xl" />
-                                                            <span className="font-bold text-[#00b707]">Đang mở cửa</span>
-                                                            - {""}
-                                                            07:00 - 23:00
-                                                        </div>
-                                                    </div>
-                                                    <div className="absolute top-2 right-[10px] bottom-auto left-auto">
-                                                        <div className="hover:text-[#e03] flex items-center justify-center relative cursor-pointer w-9 h-9 font-lg text-black bg-white rounded-[50%] shadow-md">
-                                                            <BsBookmark></BsBookmark>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="mb-5">
-                                                <div className="relative flex bg-white rounded-lg shadow-md">
-                                                    <Link target="blank" to="/" className="py-2 pl-2">
-                                                        <div className="w-[270px] h-full overflow-hidden rounded">
-                                                            <div className="relative w-full h-full overflow-hidden">
-                                                                <div className="absolute top-0 left-0 w-full h-full">
-                                                                    <img src="https://toidicafe.vn/static/images/2022/06/18/73d995a3-96a0-4c84-b880-febaf69e1454-284476309_103880252358724_7819.jpeg" srcSet="https://toidicafe.vn/static/images/2022/06/18/73d995a3-96a0-4c84-b880-febaf69e1454-284476309_103880252358724_7819.jpeg 2x" alt="" className="object-cover w-full h-full " />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </Link>
-                                                    <div className="flex-shrink flex-grow pt-[6px] px-6 pb-6 min-h-[200px]">
-                                                        <Link target="blank" to="/">
-                                                            <h4 className="text-xl font-bold pt-[6px] pb-1">EEBakery Coffee</h4>
-                                                        </Link>
-                                                        <div className="text-base pt-[2px]">
-                                                            <span className="text-[#e03] mr-[6px]">
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                            </span>
-                                                            {"- "}
-                                                            chưa có đánh giá
-                                                        </div>
-                                                        <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                                            <MdAttachMoney className="inline-block text-xl" />
-                                                            30.000đ - 60.000đ
-                                                        </div>
-                                                        <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                                            <GoLocation className="inline-block text-xl" />
-                                                            8 Ngõ 24 Đào Tấn, Ba Đình
-                                                        </div>
-                                                        <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                                            <BsClock className="inline-block text-xl" />
-                                                            <span className="font-bold text-[#00b707]">Đang mở cửa</span>
-                                                            - {""}
-                                                            07:00 - 23:00
-                                                        </div>
-                                                    </div>
-                                                    <div className="absolute top-2 right-[10px] bottom-auto left-auto">
-                                                        <div className="hover:text-[#e03] flex items-center justify-center relative cursor-pointer w-9 h-9 font-lg text-black bg-white rounded-[50%] shadow-md">
-                                                            <BsBookmark></BsBookmark>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="mb-5">
-                                                <div className="relative flex bg-white rounded-lg shadow-md">
-                                                    <Link target="blank" to="/" className="py-2 pl-2">
-                                                        <div className="w-[270px] h-full overflow-hidden rounded">
-                                                            <div className="relative w-full h-full overflow-hidden">
-                                                                <div className="absolute top-0 left-0 w-full h-full">
-                                                                    <img src="https://toidicafe.vn/static/images/2022/06/18/73d995a3-96a0-4c84-b880-febaf69e1454-284476309_103880252358724_7819.jpeg" srcSet="https://toidicafe.vn/static/images/2022/06/18/73d995a3-96a0-4c84-b880-febaf69e1454-284476309_103880252358724_7819.jpeg 2x" alt="" className="object-cover w-full h-full " />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </Link>
-                                                    <div className="flex-shrink flex-grow pt-[6px] px-6 pb-6 min-h-[200px]">
-                                                        <Link target="blank" to="/">
-                                                            <h4 className="text-xl font-bold pt-[6px] pb-1">EEBakery Coffee</h4>
-                                                        </Link>
-                                                        <div className="text-base pt-[2px]">
-                                                            <span className="text-[#e03] mr-[6px]">
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                            </span>
-                                                            {"- "}
-                                                            chưa có đánh giá
-                                                        </div>
-                                                        <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                                            <MdAttachMoney className="inline-block text-xl" />
-                                                            30.000đ - 60.000đ
-                                                        </div>
-                                                        <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                                            <GoLocation className="inline-block text-xl" />
-                                                            8 Ngõ 24 Đào Tấn, Ba Đình
-                                                        </div>
-                                                        <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                                            <BsClock className="inline-block text-xl" />
-                                                            <span className="font-bold text-[#00b707]">Đang mở cửa</span>
-                                                            - {""}
-                                                            07:00 - 23:00
-                                                        </div>
-                                                    </div>
-                                                    <div className="absolute top-2 right-[10px] bottom-auto left-auto">
-                                                        <div className="hover:text-[#e03] flex items-center justify-center relative cursor-pointer w-9 h-9 font-lg text-black bg-white rounded-[50%] shadow-md">
-                                                            <BsBookmark></BsBookmark>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="mb-5">
-                                                <div className="relative flex bg-white rounded-lg shadow-md">
-                                                    <Link target="blank" to="/" className="py-2 pl-2">
-                                                        <div className="w-[270px] h-full overflow-hidden rounded">
-                                                            <div className="relative w-full h-full overflow-hidden">
-                                                                <div className="absolute top-0 left-0 w-full h-full">
-                                                                    <img src="https://toidicafe.vn/static/images/2022/06/18/73d995a3-96a0-4c84-b880-febaf69e1454-284476309_103880252358724_7819.jpeg" srcSet="https://toidicafe.vn/static/images/2022/06/18/73d995a3-96a0-4c84-b880-febaf69e1454-284476309_103880252358724_7819.jpeg 2x" alt="" className="object-cover w-full h-full " />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </Link>
-                                                    <div className="flex-shrink flex-grow pt-[6px] px-6 pb-6 min-h-[200px]">
-                                                        <Link target="blank" to="/">
-                                                            <h4 className="text-xl font-bold pt-[6px] pb-1">EEBakery Coffee</h4>
-                                                        </Link>
-                                                        <div className="text-base pt-[2px]">
-                                                            <span className="text-[#e03] mr-[6px]">
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                            </span>
-                                                            {"- "}
-                                                            chưa có đánh giá
-                                                        </div>
-                                                        <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                                            <MdAttachMoney className="inline-block text-xl" />
-                                                            30.000đ - 60.000đ
-                                                        </div>
-                                                        <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                                            <GoLocation className="inline-block text-xl" />
-                                                            8 Ngõ 24 Đào Tấn, Ba Đình
-                                                        </div>
-                                                        <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                                            <BsClock className="inline-block text-xl" />
-                                                            <span className="font-bold text-[#00b707]">Đang mở cửa</span>
-                                                            - {""}
-                                                            07:00 - 23:00
-                                                        </div>
-                                                    </div>
-                                                    <div className="absolute top-2 right-[10px] bottom-auto left-auto">
-                                                        <div className="hover:text-[#e03] flex items-center justify-center relative cursor-pointer w-9 h-9 font-lg text-black bg-white rounded-[50%] shadow-md">
-                                                            <BsBookmark></BsBookmark>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="mb-5">
-                                                <div className="relative flex bg-white rounded-lg shadow-md">
-                                                    <Link target="blank" to="/" className="py-2 pl-2">
-                                                        <div className="w-[270px] h-full overflow-hidden rounded">
-                                                            <div className="relative w-full h-full overflow-hidden">
-                                                                <div className="absolute top-0 left-0 w-full h-full">
-                                                                    <img src="https://toidicafe.vn/static/images/2022/06/18/73d995a3-96a0-4c84-b880-febaf69e1454-284476309_103880252358724_7819.jpeg" srcSet="https://toidicafe.vn/static/images/2022/06/18/73d995a3-96a0-4c84-b880-febaf69e1454-284476309_103880252358724_7819.jpeg 2x" alt="" className="object-cover w-full h-full " />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </Link>
-                                                    <div className="flex-shrink flex-grow pt-[6px] px-6 pb-6 min-h-[200px]">
-                                                        <Link target="blank" to="/">
-                                                            <h4 className="text-xl font-bold pt-[6px] pb-1">EEBakery Coffee</h4>
-                                                        </Link>
-                                                        <div className="text-base pt-[2px]">
-                                                            <span className="text-[#e03] mr-[6px]">
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                            </span>
-                                                            {"- "}
-                                                            chưa có đánh giá
-                                                        </div>
-                                                        <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                                            <MdAttachMoney className="inline-block text-xl" />
-                                                            30.000đ - 60.000đ
-                                                        </div>
-                                                        <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                                            <GoLocation className="inline-block text-xl" />
-                                                            8 Ngõ 24 Đào Tấn, Ba Đình
-                                                        </div>
-                                                        <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                                            <BsClock className="inline-block text-xl" />
-                                                            <span className="font-bold text-[#00b707]">Đang mở cửa</span>
-                                                            - {""}
-                                                            07:00 - 23:00
-                                                        </div>
-                                                    </div>
-                                                    <div className="absolute top-2 right-[10px] bottom-auto left-auto">
-                                                        <div className="hover:text-[#e03] flex items-center justify-center relative cursor-pointer w-9 h-9 font-lg text-black bg-white rounded-[50%] shadow-md">
-                                                            <BsBookmark></BsBookmark>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="mb-5">
-                                                <div className="relative flex bg-white rounded-lg shadow-md">
-                                                    <Link target="blank" to="/" className="py-2 pl-2">
-                                                        <div className="w-[270px] h-full overflow-hidden rounded">
-                                                            <div className="relative w-full h-full overflow-hidden">
-                                                                <div className="absolute top-0 left-0 w-full h-full">
-                                                                    <img src="https://toidicafe.vn/static/images/2022/06/18/73d995a3-96a0-4c84-b880-febaf69e1454-284476309_103880252358724_7819.jpeg" srcSet="https://toidicafe.vn/static/images/2022/06/18/73d995a3-96a0-4c84-b880-febaf69e1454-284476309_103880252358724_7819.jpeg 2x" alt="" className="object-cover w-full h-full " />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </Link>
-                                                    <div className="flex-shrink flex-grow pt-[6px] px-6 pb-6 min-h-[200px]">
-                                                        <Link target="blank" to="/">
-                                                            <h4 className="text-xl font-bold pt-[6px] pb-1">EEBakery Coffee</h4>
-                                                        </Link>
-                                                        <div className="text-base pt-[2px]">
-                                                            <span className="text-[#e03] mr-[6px]">
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                                <AiOutlineStar className="inline-block text-2xl" />
-                                                            </span>
-                                                            {"- "}
-                                                            chưa có đánh giá
-                                                        </div>
-                                                        <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                                            <MdAttachMoney className="inline-block text-xl" />
-                                                            30.000đ - 60.000đ
-                                                        </div>
-                                                        <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                                            <GoLocation className="inline-block text-xl" />
-                                                            8 Ngõ 24 Đào Tấn, Ba Đình
-                                                        </div>
-                                                        <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                                            <BsClock className="inline-block text-xl" />
-                                                            <span className="font-bold text-[#00b707]">Đang mở cửa</span>
-                                                            - {""}
-                                                            07:00 - 23:00
-                                                        </div>
-                                                    </div>
-                                                    <div className="absolute top-2 right-[10px] bottom-auto left-auto">
-                                                        <div className="hover:text-[#e03] flex items-center justify-center relative cursor-pointer w-9 h-9 font-lg text-black bg-white rounded-[50%] shadow-md">
-                                                            <BsBookmark></BsBookmark>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                )
+                                                )
+                                            }
                                         </div>
                                         <div className="w-full p-[14px] rounded-[10px]">
                                             <ul className="flex items-center justify-center">
