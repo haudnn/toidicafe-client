@@ -5,18 +5,29 @@ import { BASE_URI } from '../constants';
 
 interface Response {
     message: string;
-    shops:Array<any>
+    shop: any;
+    shops:Array<any>;
+    regions:Array<any>;
+    purposes:Array<any>;
+    tags: Array<any>;
+    benefits: Array<any>;
 }
-const useFetch = (url: string) => {
+const useFetch = (options:any) => {
+  const {method, payload, url, headers} = options
   const [isLoading, setIsLoading] = useState(false);
-  const [result, setResult] = useState<Response>()
+  const [response, setResponse] = useState<Response>()
   useEffect(() => {
     async function fetching() {
       setIsLoading(true);
       try {
-        const requestUrl = `${BASE_URI}/${url}`;
-        const response = await axios.get(requestUrl)
-        setResult(response.data)
+        const option = {
+          method,
+          url: `${BASE_URI}/${url}`,
+          data: payload,
+          headers
+        };
+        const response = await axios(option);
+        setResponse(response.data)
         setIsLoading(false) 
       } catch (err) {
         console.log(err);
@@ -24,7 +35,7 @@ const useFetch = (url: string) => {
 
     }
     fetching();
-  }, [url]);
-  return {isLoading, result} 
+  }, [method, payload, url, headers]);
+  return {isLoading, response} 
 };
 export default useFetch

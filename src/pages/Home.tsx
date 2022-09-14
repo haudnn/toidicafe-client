@@ -1,8 +1,8 @@
 import React from 'react'
 import "keen-slider/keen-slider.min.css"
 import Slider from '../components/Slider'
-import Topic from '../components/Topic'
-import Area from '../components/Area'
+import Purpose from '../components/Purpose'
+import Region from '../components/Region'
 import Location from '../components/Location'
 import suggest_img from '../assets/img/suggest-place.png';
 import { Link } from 'react-router-dom'
@@ -13,8 +13,8 @@ const Home = () => {
     <div className="home">
       <Slider />
       <div className="max-w-[1200px] mx-auto my-0">
-        <Topic />
-        <Area />
+        <Purpose />
+        <Region />
         <Location />
         <section className="py-10 home-section">
           <div className="flex items-center justify-center">

@@ -14,7 +14,7 @@ const routes = [
     component: <Search/>,
   },
   {
-    path: '/place',
+    path: '/place/:slug',
     component: <Place/>,
   },
   {
