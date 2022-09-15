@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { RiArrowDownSLine } from 'react-icons/ri';
-import { AiOutlineClose, AiOutlineStar, AiFillStar } from 'react-icons/ai';
+import { AiOutlineClose, AiOutlineStar } from 'react-icons/ai';
 import { MdAttachMoney } from 'react-icons/md';
 import { GoLocation } from 'react-icons/go';
 import { BsClock, BsBookmark } from 'react-icons/bs';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
-import { useFetch, useDebounce } from '../../../hooks/';
-import { Link } from 'react-router-dom';
+import { useFetch, useDebounce} from '../../../hooks/';
+import { Link, useSearchParams } from 'react-router-dom';
 import Skeleton from '../../../components/Common/Skeleton';
 import axios from 'axios';
+import covertSlug from '../../../utils/covertSlug';
+import autoScrollTop  from '../../../utils/autoScrollTop';
 import { BASE_URI } from '../../../constants';
-import {useSearchParams} from 'react-router-dom'
+import formatMonney from '../../../utils/formatMoney';
 interface TagList {
   purposes: Array<any>;
   regions: Array<any>;
@@ -26,7 +28,11 @@ interface ShopList{
   shops: Array<any>;
 }
 const Search = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] =  useSearchParams();
+  const [param, setParam] = useState({
+    regions: "",
+    purposes :"",
+  });
   const [tagList, setTagList] = useState<TagList>({
     purposes: [],
     regions: [],
@@ -35,6 +41,9 @@ const Search = () => {
   });
   const [value, setValue] = useState({
     ...tagList,
+    regions: searchParams.get("regions") ? [ searchParams.get("regions") ] : [],
+    purposes: searchParams.get("purposes") ? [ searchParams.get("purposes") ] : [],
+    openning: false,
     page: 1,
   });
   const [isLoading, setIsLoading] = useState(false);
@@ -46,16 +55,45 @@ const Search = () => {
     },
     shops : [],
   });
-  // useEffect (() => {
-  //   const search = searchParams.get("regions")
-  //   setValue((prev:any) => {
-  //     return {
-  //       ...prev,
-  //       regions: prev.regions.push(search)
-  //     }
-  //   })
-  // },[searchParams]) 
-  const debouncedValue = useDebounce(value, 500);
+  useEffect(() => {
+    if(searchParams.get("regions")){
+      setParam((prev:any) => {
+        return {
+          ...prev,
+          regions: searchParams.get("regions"),
+        }
+      })
+    }
+    if(searchParams.get("purposes")){
+      setParam((prev:any) => {
+        return {
+          ...prev,
+          purposes: searchParams.get("purposes"),
+        }
+      })
+    }
+    autoScrollTop()
+  },[searchParams])
+  useEffect(() => {
+    if(param.regions){
+      const convert = covertSlug(param.regions)
+      setTagList((prev) => {
+        return {
+          ...prev,
+          regions: [...prev.regions, convert],
+        }
+      })
+    }
+    if(param.purposes){
+      const convert = covertSlug(param.purposes)
+      setTagList((prev) => {
+        return {
+          ...prev,
+          purposes: [...prev.purposes, convert],
+        }
+      })
+    }
+  },[param]) 
   const regions = useFetch({
     url: 'regions',
     method: 'GET',
@@ -101,14 +139,32 @@ const Search = () => {
         };
       }
     });
+    autoScrollTop()
   };
   const handelRemovedTag = (index: number, label: string) => {
     const newTagList = { ...tagList };
     const newValue = { ...value };
+    if(newValue.regions[index] === param.regions){
+      setParam((prev) => {
+        return {
+          ...prev,
+          regions: ""
+        }
+      })
+    }
+    if(newValue.purposes[index]  === param.purposes){
+      setParam((prev) => {
+        return {
+          ...prev,
+          purposes: ""
+        }
+      })
+    }
     newValue[label as keyof TagList].splice(index, 1);
     newTagList[label as keyof TagList].splice(index, 1);
     setTagList(newTagList);
     setValue(newValue);
+    autoScrollTop()
   };
   const handelRemovedAllTag = () => {
     setTagList({
@@ -123,8 +179,23 @@ const Search = () => {
       regions: [],
       benefits: [],
       tags: [],
+      openning: false,
     });
+    setParam({
+      regions: "",
+      purposes :""
+    })
+    autoScrollTop()
   };
+  const handelChangeRadio = () => {
+    setValue((prev) => {
+      return {
+        ...prev,
+        openning: !prev.openning,
+      }
+    })
+  }
+  const debouncedValue = useDebounce(value, 500);
   useEffect(() => {
     async function fetching() {
       try {
@@ -134,14 +205,16 @@ const Search = () => {
           url: `${BASE_URI}/shops/search`,
           data: debouncedValue,
         };
-        const response = await axios(option);
+        const {data} = await axios(option);
+        const {page, total, pagesize} = data.meta
+        const {shops} = data
         setShops({
           meta : {
-            page: response.data.meta.page,  
-            total: response.data.meta.total,
-            pagesize: response.data.meta.pagesize,
+            page ,
+            total,
+            pagesize,
           },
-          shops: response.data.shops,
+          shops
         });
         setIsLoading(false);
       } catch (error) {
@@ -178,21 +251,24 @@ const Search = () => {
                         <div className="max-h-[220px] overflow-y-auto">
                           <div className="mb-[10px]">
                             <input
-                              checked={true}
+                              checked={!value.openning}
                               type="radio"
                               id="all"
                               className="radio-input"
                               name="all"
+                              onClick={handelChangeRadio}
                             />
                             <label htmlFor="all" className="radio-label"></label>
                             <label htmlFor="all">Tất cả</label>
                           </div>
                           <div className="mb-[10px]">
                             <input
+                              checked={value.openning}
                               type="radio"
                               id="openning"
                               className="radio-input"
                               name="openning"
+                              onClick={handelChangeRadio}
                             />
                             <label htmlFor="openning" className="radio-label"></label>
                             <label htmlFor="openning">Đang mở cửa</label>
@@ -348,22 +424,20 @@ const Search = () => {
                   </div>
                   <div className="mb-[10px]">
                     {tagList.regions.map((tag, index) => (
-                      <div key={index} className="inline-block mb-1 mr-2 cursor-pointer">
+                      <div onClick={() => handelRemovedTag(index, 'regions' )} key={index}  className="inline-block mb-1 mr-2 cursor-pointer">
                         <div className="text-base font-semibold py-1 px-2 text-[#e03] bg-white border border-solid border-[#e03] rounded-lg">
                           <span className="">{tag}</span>
                           <AiOutlineClose
-                            onClick={() => handelRemovedTag(index, 'regions')}
                             className="inline-block text-sm ml-1 text-[rgba(0,0,0,0.25)] cursor-pointer"
                           />
                         </div>
                       </div>
                     ))}
                     {tagList.purposes.map((tag, index) => (
-                      <div key={index} className="inline-block mb-1 mr-2 cursor-pointer">
+                      <div key={index} onClick={() => handelRemovedTag(index, 'purposes')}className="inline-block mb-1 mr-2 cursor-pointer">
                         <div className="text-base font-semibold py-1 px-2 text-[#e03] bg-white border border-solid border-[#e03] rounded-lg">
-                          <span className="">{tag}</span>
+                          <span>{tag}</span>
                           <AiOutlineClose
-                            onClick={() => handelRemovedTag(index, 'purposes')}
                             className="inline-block text-sm ml-1 text-[rgba(0,0,0,0.25)] cursor-pointer"
                           />
                         </div>
@@ -394,7 +468,11 @@ const Search = () => {
                   </div>
                   <div className="min-h-[50vh] relative">
                     {isLoading ? (
-                      <Skeleton></Skeleton>
+                      <>
+                        {
+                          Array.from({ length: 5 }).map((_,) => (<Skeleton></Skeleton>))
+                        }
+                      </>
                     ) : (
                       <div>
                         {shops.shops.map((shop, index) => (
@@ -405,7 +483,7 @@ const Search = () => {
                                   <div className="relative w-full h-full overflow-hidden">
                                     <div className="absolute top-0 left-0 w-full h-full">
                                       <img
-                                        src={shop.images[0]}
+                                        src={shop.images}
                                         alt=""
                                         className="object-cover w-full h-full "
                                       />
@@ -430,7 +508,7 @@ const Search = () => {
                                 </div>
                                 <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
                                   <MdAttachMoney className="inline-block text-xl" />
-                                  {shop.price.min}đ - {shop.price.max}đ
+                                  {formatMonney(shop.price.min)}đ - {formatMonney(shop.price.max)}đ
                                 </div>
                                 <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
                                   <GoLocation className="inline-block text-xl" />
@@ -438,9 +516,17 @@ const Search = () => {
                                 </div>
                                 <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
                                   <BsClock className="inline-block text-xl" />
-                                  <span className="font-bold text-[#00b707]">
-                                    Đang mở cửa
-                                  </span>- {''}
+                                     {shop.status === 'openning' ? (
+                                    <span className="font-semibold text-[#00b707]">
+                                      Đang mở cửa
+                                    </span>
+                                  ) : shop.status === 'closed' ? (
+                                    <span className="font-semibold text-[#e03]">Đang đóng cửa</span>
+                                  ) : (
+                                    <span className="font-semibold text-[#ff9800]">
+                                      Sắp đóng cửa
+                                    </span>
+                                  )} - {''}
                                   {shop.time.open} - {shop.time.close}
                                 </div>
                               </div>
@@ -454,7 +540,6 @@ const Search = () => {
                         ))}
                       </div>
                     )}
-
                     <div className="w-full p-[14px] rounded-[10px]">
                       <ul className="flex items-center justify-center">
                         <li className="mx-[10px] text-lg text-[#999] cursor-not-allowed opacity-50 transition-all delay-[0.2s] pagi-action pagi-prev ">

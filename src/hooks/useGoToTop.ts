@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react";
 
-const useGoToTop = () => {
+const useGoToTop = (possition:number) => {
   const [visible, setVisible] = useState(false);
   const scrollToTop = () => {
     window.scrollTo({
@@ -11,7 +11,7 @@ const useGoToTop = () => {
   useEffect(() => {
     const handleShow = () => {
       let pageY = window.pageYOffset;
-      if (pageY > 500) {
+      if (pageY > possition) {
         setVisible(true);
       } else {
         setVisible(false);
@@ -19,7 +19,7 @@ const useGoToTop = () => {
     };
     window.addEventListener("scroll", handleShow);
     return () => window.removeEventListener("scroll", handleShow);
-  }, []);
+  }, [possition]);
   return {visible, scrollToTop}
 };
 export default useGoToTop
