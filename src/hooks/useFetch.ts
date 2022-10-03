@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BASE_URI } from '../constants';
+import { getAccessToken } from '../utils/localStorage';
 
-
+// interface 
 interface Response {
     message: string;
     shop: any;
@@ -15,7 +16,7 @@ interface Response {
 const useFetch = (options:any) => {
   const {method, payload, url, headers} = options
   const [isLoading, setIsLoading] = useState(false);
-  const [response, setResponse] = useState<Response>()
+  const [response, setResponse] = useState<Response>() 
   useEffect(() => {
     async function fetching() {
       setIsLoading(true);
@@ -32,7 +33,6 @@ const useFetch = (options:any) => {
       } catch (err) {
         console.log(err);
       }
-
     }
     fetching();
   }, [method, payload, url, headers]);

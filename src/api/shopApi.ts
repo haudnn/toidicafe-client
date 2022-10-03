@@ -1,13 +1,47 @@
-
+import { BookmarkPayload } from '../features/search/searchSlice';
+import { getAccessToken } from '../utils/localStorage';
 import axiosClient from './axiosClient';
-// import {LoginPayload, RegisterPayload} from '../features/auth/interfaces'
 const shopApi = {
-    getDataSearch(url:string) {
-      return axiosClient.get(url);
+    bookmarkShop(payload: BookmarkPayload)  {
+      const access_token = getAccessToken()
+      const headers = {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${access_token}`
+      }   
+      const url = '/shops/bookmark'
+      return axiosClient.post(url, {
+        shopId: payload,
+      },
+      {
+        headers: headers,
+      }
+      );
     },
-    searchPlace(payload:any) {
-      const url = '/shops/search';
-      return axiosClient.post(url, payload);
+    unBookmarkShop(payload: BookmarkPayload)  { 
+      const access_token = getAccessToken()
+      const headers = {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${access_token}`
+      }   
+      const url = '/shops/unbookmark'
+      return axiosClient.post(url, {
+        shopId: payload
+      },
+      {
+        headers: headers,
+      }
+      );
+    },
+    getBookmarks(url: string){
+      const access_token = getAccessToken()
+      const headers = {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${access_token}`
+      }     
+      return axiosClient.get(url,{
+        headers: headers,
+      }
+      );
     }
   }
 

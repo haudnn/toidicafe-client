@@ -1,8 +1,12 @@
 import Explore from '../features/explore/pages/Explore';
+import Photo from '../features/place/pages/Photo';
 import Place from '../features/place/pages/Place';
 import Profile from '../features/profile/page/Profile';
+import Save from '../features/save/pages/Save';
 import Search from '../features/search/pages/Search';
-import Home from '../pages/Home';
+import Home from '../features/home/pages/Home';
+import Write from '../features/write/pages/Write';
+
 
 const routes = [
   {
@@ -11,19 +15,31 @@ const routes = [
   },
   {
     path: '/search',
-    component: <Search/>,
+    component: <Search />,
   },
   {
     path: '/place/:slug',
-    component: <Place/>,
+    component: <Place />,
+  },
+  {
+    path: '/place/:slug/photo',
+    component: <Photo />,
   },
   {
     path: '/explore',
-    component: <Explore/>,
+    component: <Explore />,
+  },
+  {
+    path: '/save',
+    component: <Save />,
   },
   {
     path: '/profile/:username',
-    component: <Profile/>,
+    component: <Profile />,
+  },
+  {
+    path: '/review',
+    component: <Write />,
   },
 ];
 

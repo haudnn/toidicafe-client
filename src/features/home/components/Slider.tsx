@@ -1,7 +1,7 @@
 import React, { useState} from 'react'
 import { BiSearch } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
-import useOnClickOutside from '../hooks/useClickOutSide'
+import useOnClickOutside from '../../../hooks/useClickOutSide'
 import Search from './Search'
 
 const Slider = () => {

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { Link } from 'react-router-dom';
-import { useSlider, useFetch } from '../hooks/';
+import { useSlider, useFetch } from '../../../hooks';
 
 const Purpose = () => {
   const sliderRef = useSlider("purposes");

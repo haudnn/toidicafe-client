@@ -1,37 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import { RiArrowDownSLine } from 'react-icons/ri';
-import { AiOutlineClose, AiOutlineStar } from 'react-icons/ai';
-import { MdAttachMoney } from 'react-icons/md';
-import { GoLocation } from 'react-icons/go';
-import { BsClock, BsBookmark } from 'react-icons/bs';
+import { AiOutlineClose } from 'react-icons/ai';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
-import { useFetch, useDebounce} from '../../../hooks/';
-import { Link, useSearchParams } from 'react-router-dom';
+import { useFetch, useDebounce } from '../../../hooks/';
+import { useSearchParams } from 'react-router-dom';
 import Skeleton from '../../../components/Common/Skeleton';
 import axios from 'axios';
 import covertSlug from '../../../utils/covertSlug';
-import autoScrollTop  from '../../../utils/autoScrollTop';
+import autoScrollTop from '../../../utils/autoScrollTop';
 import { BASE_URI } from '../../../constants';
-import formatMonney from '../../../utils/formatMoney';
+import ShopItem from '../components/ShopItem';
+import useAuth from '../../../hooks/useAuth';
+import RegionItem from '../components/RegionItem';
+import PurposeItem from '../components/PurposeItem';
+import TagItem from '../components/TagItem';
+import BenefitItem from '../components/BenefitItem';
+
+
 interface TagList {
   purposes: Array<any>;
   regions: Array<any>;
   benefits: Array<any>;
   tags: Array<any>;
 }
-interface ShopList{
+interface ShopList {
   meta: {
-    page: string,
-    pagesize: number,
-    total: number
-  },
+    page: string;
+    pagesize: number;
+    total: number;
+  };
   shops: Array<any>;
 }
 const Search = () => {
-  const [searchParams] =  useSearchParams();
+  const [searchParams] = useSearchParams();
   const [param, setParam] = useState({
-    regions: "",
-    purposes :"",
+    regions: '',
+    purposes: '',
   });
   const [tagList, setTagList] = useState<TagList>({
     purposes: [],
@@ -41,59 +45,60 @@ const Search = () => {
   });
   const [value, setValue] = useState({
     ...tagList,
-    regions: searchParams.get("regions") ? [ searchParams.get("regions") ] : [],
-    purposes: searchParams.get("purposes") ? [ searchParams.get("purposes") ] : [],
+    regions: searchParams.get('regions') ? [searchParams.get('regions')] : [],
+    purposes: searchParams.get('purposes') ? [searchParams.get('purposes')] : [],
     openning: false,
     page: 1,
   });
   const [isLoading, setIsLoading] = useState(false);
   const [shops, setShops] = useState<ShopList>({
     meta: {
-      page: "1",
+      page: '1',
       pagesize: 10,
       total: 1,
     },
-    shops : [],
+    shops: [],
   });
   useEffect(() => {
-    if(searchParams.get("regions")){
-      setParam((prev:any) => {
+    if (searchParams.get('regions')) {
+      setParam((prev: any) => {
         return {
           ...prev,
-          regions: searchParams.get("regions"),
-        }
-      })
+          regions: searchParams.get('regions'),
+        };
+      });
     }
-    if(searchParams.get("purposes")){
-      setParam((prev:any) => {
+    if (searchParams.get('purposes')) {
+      setParam((prev: any) => {
         return {
           ...prev,
-          purposes: searchParams.get("purposes"),
-        }
-      })
+          purposes: searchParams.get('purposes'),
+        };
+      });
     }
-    autoScrollTop()
-  },[searchParams])
+    autoScrollTop();
+  }, [searchParams]);
+
   useEffect(() => {
-    if(param.regions){
-      const convert = covertSlug(param.regions)
+    if (param.regions) {
+      const convert = covertSlug(param.regions);
       setTagList((prev) => {
         return {
           ...prev,
           regions: [...prev.regions, convert],
-        }
-      })
+        };
+      });
     }
-    if(param.purposes){
-      const convert = covertSlug(param.purposes)
+    if (param.purposes) {
+      const convert = covertSlug(param.purposes);
       setTagList((prev) => {
         return {
           ...prev,
           purposes: [...prev.purposes, convert],
-        }
-      })
+        };
+      });
     }
-  },[param]) 
+  }, [param]);
   const regions = useFetch({
     url: 'regions',
     method: 'GET',
@@ -110,6 +115,8 @@ const Search = () => {
     url: 'benefits',
     method: 'GET',
   });
+  const { user } = useAuth()
+
   const handelChangeTag = (name: string, label: string, e: any) => {
     setTagList((prev) => {
       if (prev[label as keyof TagList].includes(name)) {
@@ -139,32 +146,32 @@ const Search = () => {
         };
       }
     });
-    autoScrollTop()
+    autoScrollTop();
   };
   const handelRemovedTag = (index: number, label: string) => {
     const newTagList = { ...tagList };
     const newValue = { ...value };
-    if(newValue.regions[index] === param.regions){
+    if (newValue.regions[index] === param.regions) {
       setParam((prev) => {
         return {
           ...prev,
-          regions: ""
-        }
-      })
+          regions: '',
+        };
+      });
     }
-    if(newValue.purposes[index]  === param.purposes){
+    if (newValue.purposes[index] === param.purposes) {
       setParam((prev) => {
         return {
           ...prev,
-          purposes: ""
-        }
-      })
+          purposes: '',
+        };
+      });
     }
     newValue[label as keyof TagList].splice(index, 1);
     newTagList[label as keyof TagList].splice(index, 1);
     setTagList(newTagList);
     setValue(newValue);
-    autoScrollTop()
+    autoScrollTop();
   };
   const handelRemovedAllTag = () => {
     setTagList({
@@ -182,19 +189,19 @@ const Search = () => {
       openning: false,
     });
     setParam({
-      regions: "",
-      purposes :""
-    })
-    autoScrollTop()
+      regions: '',
+      purposes: '',
+    });
+    autoScrollTop();
   };
   const handelChangeRadio = () => {
     setValue((prev) => {
       return {
         ...prev,
         openning: !prev.openning,
-      }
-    })
-  }
+      };
+    });
+  };
   const debouncedValue = useDebounce(value, 500);
   useEffect(() => {
     async function fetching() {
@@ -205,16 +212,16 @@ const Search = () => {
           url: `${BASE_URI}/shops/search`,
           data: debouncedValue,
         };
-        const {data} = await axios(option);
-        const {page, total, pagesize} = data.meta
-        const {shops} = data
+        const { data } = await axios(option);
+        const { page, total, pagesize } = data.meta;
+        const { shops } = data;
         setShops({
-          meta : {
-            page ,
+          meta: {
+            page,
             total,
             pagesize,
           },
-          shops
+          shops,
         });
         setIsLoading(false);
       } catch (error) {
@@ -222,7 +229,7 @@ const Search = () => {
       }
     }
     fetching();
-  }, [debouncedValue]); 
+  }, [debouncedValue]);
   return (
     <div className="search">
       <div className="w-full min-h-screen">
@@ -284,18 +291,13 @@ const Search = () => {
                       <div className="p-[10px]">
                         <div className="max-h-[160px] overflow-y-auto custom-scrollbar">
                           {regions.response?.regions.map((region, index) => (
-                            <div key={index} className="mb-[10px]">
-                              <input
-                                id={region.slug}
-                                type="checkbox"
-                                onChange={(e) => handelChangeTag(region.name, 'regions', e)}
-                                checked={tagList.regions.includes(region.name) ? true : false}
-                                name={region.slug}
-                              />
-                              <label className="text-base" htmlFor={region.slug}>
-                                Quận {region.name}
-                              </label>
-                            </div>
+                            <RegionItem
+                            index={index}
+                            slug ={region.slug}
+                            name={region.name}
+                            isChecked={tagList.regions.includes(region.name)} 
+                            handelChangeTag={handelChangeTag}                           
+                            />
                           ))}
                         </div>
                       </div>
@@ -308,18 +310,13 @@ const Search = () => {
                       <div className="p-[10px]">
                         <div>
                           {purposes.response?.purposes.map((purpose, index) => (
-                            <div key={index} className="mb-[10px]">
-                              <input
-                                name={purpose.slug}
-                                id={purpose.slug}
-                                type="checkbox"
-                                onChange={(e) => handelChangeTag(purpose.name, 'purposes', e)}
-                                checked={tagList.purposes.includes(purpose.name) ? true : false}
-                              />
-                              <label className="text-base" htmlFor={purpose.slug}>
-                                {purpose.name}
-                              </label>
-                            </div>
+                            <PurposeItem
+                            index={index}
+                            slug ={purpose.slug}
+                            name={purpose.name}
+                            isChecked={tagList.purposes.includes(purpose.name)} 
+                            handelChangeTag={handelChangeTag}     
+                            />
                           ))}
                         </div>
                       </div>
@@ -334,18 +331,13 @@ const Search = () => {
                       <div className="p-[10px]">
                         <div className="max-h-[160px] overflow-y-auto custom-scrollbar">
                           {tags.response?.tags.map((tag, index) => (
-                            <div key={index} className="mb-[10px]">
-                              <input
-                                id={tag.slug}
-                                name={tag.slug}
-                                type="checkbox"
-                                onChange={(e) => handelChangeTag(tag.name, 'tags', e)}
-                                checked={tagList.tags.includes(tag.name) ? true : false}
-                              />
-                              <label className="text-base" htmlFor={tag.slug}>
-                                {tag.name}
-                              </label>
-                            </div>
+                            <TagItem
+                            index={index}
+                            slug ={tag.slug}
+                            name={tag.name}
+                            isChecked={tagList.tags.includes(tag.name)} 
+                            handelChangeTag={handelChangeTag}   
+                            />
                           ))}
                         </div>
                       </div>
@@ -362,7 +354,6 @@ const Search = () => {
                           <span className="block text-center text-lg text-[#e03] font-semibold">
                             0 ~ 300.000 VNĐ
                           </span>
-                          {/* range */}
                         </div>
                       </div>
                     </div>
@@ -374,18 +365,13 @@ const Search = () => {
                       <div className="p-[10px]">
                         <div className="max-h-[160px] overflow-y-auto custom-scrollbar">
                           {benefits.response?.benefits.map((benefit, index) => (
-                            <div key={index} className="mb-[10px]">
-                              <input
-                                id={benefit.slug}
-                                type="checkbox"
-                                name={benefit.slug}
-                                onChange={(e) => handelChangeTag(benefit.name, 'benefits', e)}
-                                checked={tagList.benefits.includes(benefit.name) ? true : false}
-                              />
-                              <label className="text-base" htmlFor={benefit.slug}>
-                                {benefit.name}
-                              </label>
-                            </div>
+                            <BenefitItem
+                            index={index}
+                            slug ={benefit.slug}
+                            name={benefit.name}
+                            isChecked={tagList.benefits.includes(benefit.name)} 
+                            handelChangeTag={handelChangeTag}   
+                            />
                           ))}
                         </div>
                       </div>
@@ -424,22 +410,26 @@ const Search = () => {
                   </div>
                   <div className="mb-[10px]">
                     {tagList.regions.map((tag, index) => (
-                      <div onClick={() => handelRemovedTag(index, 'regions' )} key={index}  className="inline-block mb-1 mr-2 cursor-pointer">
+                      <div
+                        onClick={() => handelRemovedTag(index, 'regions')}
+                        key={index}
+                        className="inline-block mb-1 mr-2 cursor-pointer"
+                      >
                         <div className="text-base font-semibold py-1 px-2 text-[#e03] bg-white border border-solid border-[#e03] rounded-lg">
                           <span className="">{tag}</span>
-                          <AiOutlineClose
-                            className="inline-block text-sm ml-1 text-[rgba(0,0,0,0.25)] cursor-pointer"
-                          />
+                          <AiOutlineClose className="inline-block text-sm ml-1 text-[rgba(0,0,0,0.25)] cursor-pointer" />
                         </div>
                       </div>
                     ))}
                     {tagList.purposes.map((tag, index) => (
-                      <div key={index} onClick={() => handelRemovedTag(index, 'purposes')}className="inline-block mb-1 mr-2 cursor-pointer">
+                      <div
+                        key={index}
+                        onClick={() => handelRemovedTag(index, 'purposes')}
+                        className="inline-block mb-1 mr-2 cursor-pointer"
+                      >
                         <div className="text-base font-semibold py-1 px-2 text-[#e03] bg-white border border-solid border-[#e03] rounded-lg">
                           <span>{tag}</span>
-                          <AiOutlineClose
-                            className="inline-block text-sm ml-1 text-[rgba(0,0,0,0.25)] cursor-pointer"
-                          />
+                          <AiOutlineClose className="inline-block text-sm ml-1 text-[rgba(0,0,0,0.25)] cursor-pointer" />
                         </div>
                       </div>
                     ))}
@@ -469,74 +459,25 @@ const Search = () => {
                   <div className="min-h-[50vh] relative">
                     {isLoading ? (
                       <>
-                        {
-                          Array.from({ length: 5 }).map((_,) => (<Skeleton></Skeleton>))
-                        }
+                        {Array.from({ length: 5 }).map((_) => (
+                          <Skeleton></Skeleton>
+                        ))}
                       </>
                     ) : (
                       <div>
                         {shops.shops.map((shop, index) => (
-                          <div key={index} className="mb-5">
-                            <div className="relative flex bg-white rounded-lg shadow-md">
-                              <Link target="blank" to={`/place/${shop.slug}`} className="py-2 pl-2">
-                                <div className="w-[270px] h-full overflow-hidden rounded">
-                                  <div className="relative w-full h-full overflow-hidden">
-                                    <div className="absolute top-0 left-0 w-full h-full">
-                                      <img
-                                        src={shop.images}
-                                        alt=""
-                                        className="object-cover w-full h-full "
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
-                              </Link>
-                              <div className="flex-shrink flex-grow pt-[6px] px-6 pb-6 min-h-[200px]">
-                                <Link target="blank" to={`/place/${shop.slug}`}>
-                                  <h4 className="text-xl font-bold pt-[6px] pb-1">{shop.name}</h4>
-                                </Link>
-                                <div className="text-base pt-[2px]">
-                                  <span className="text-[#e03] mr-[6px]">
-                                    <AiOutlineStar className="inline-block text-2xl" />
-                                    <AiOutlineStar className="inline-block text-2xl" />
-                                    <AiOutlineStar className="inline-block text-2xl" />
-                                    <AiOutlineStar className="inline-block text-2xl" />
-                                    <AiOutlineStar className="inline-block text-2xl" />
-                                  </span>
-                                  {'- '}
-                                  chưa có đánh giá
-                                </div>
-                                <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                  <MdAttachMoney className="inline-block text-xl" />
-                                  {formatMonney(shop.price.min)}đ - {formatMonney(shop.price.max)}đ
-                                </div>
-                                <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                  <GoLocation className="inline-block text-xl" />
-                                  {shop.address.specific}
-                                </div>
-                                <div className="text-base pt-[6px] flex items-center gap-x-[10px]">
-                                  <BsClock className="inline-block text-xl" />
-                                     {shop.status === 'openning' ? (
-                                    <span className="font-semibold text-[#00b707]">
-                                      Đang mở cửa
-                                    </span>
-                                  ) : shop.status === 'closed' ? (
-                                    <span className="font-semibold text-[#e03]">Đang đóng cửa</span>
-                                  ) : (
-                                    <span className="font-semibold text-[#ff9800]">
-                                      Sắp đóng cửa
-                                    </span>
-                                  )} - {''}
-                                  {shop.time.open} - {shop.time.close}
-                                </div>
-                              </div>
-                              <div className="absolute top-2 right-[10px] bottom-auto left-auto">
-                                <div className="hover:text-[#e03] flex items-center justify-center relative cursor-pointer w-9 h-9 font-lg text-black bg-white rounded-[50%] shadow-md">
-                                  <BsBookmark></BsBookmark>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+                          <ShopItem
+                            index={index}
+                            slug={shop.slug}
+                            id={shop.id}
+                            images={shop.images}
+                            name={shop.name}
+                            price={shop.price}
+                            address={shop.address}
+                            status={shop.status}
+                            time={shop.time}
+                            isBookmarked = {shop.bookmarks.includes(user?._id) }
+                          />
                         ))}
                       </div>
                     )}

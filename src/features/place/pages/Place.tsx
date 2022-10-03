@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import Review from '../components/Review';
 import 'keen-slider/keen-slider.min.css';
 import { useSlider, useOnScroll, useToggle, useFetch } from '../../../hooks/';
 import {
@@ -11,16 +10,16 @@ import {
   BsTags,
   BsCheckCircleFill,
 } from 'react-icons/bs';
-import Lightbox from 'react-image-lightbox';
 import { GoLocation } from 'react-icons/go';
 import { MdAttachMoney, MdOutlineDirections } from 'react-icons/md';
 import { AiOutlineMail } from 'react-icons/ai';
-import { FaFacebookSquare, FaHeart, FaEdit, FaRegHeart } from 'react-icons/fa';
+import { FaFacebookSquare, FaHeart, FaEdit, FaRegHeart, FaTimes } from 'react-icons/fa';
 import navPlace from '../../../constants/navPlace';
 import ReadMore from '../../../components/Common/ReadMore';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import 'react-image-lightbox/style.css';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
+import LightBox from '../components/LightBox';
+import Review from '../../review/pages/Review';
 const Place = () => {
   const { slug } = useParams();
   const { isLoading, response } = useFetch({
@@ -28,7 +27,6 @@ const Place = () => {
     method: 'GET',
   });
   const [isOpen, setIsOpen] = useState<Boolean>(false);
-  const [photoIndex, setPhotoIndex] = useState(0);
   const sliderRef = useSlider('places');
   const visible = useOnScroll(300);
   const [activeTab, setActiveTab] = useState<Number>(0);
@@ -42,24 +40,12 @@ const Place = () => {
   return (
     <div className="place">
       {isOpen && (
-        <Lightbox
-          mainSrc={response?.shop.images[photoIndex]}
-          nextSrc={response?.shop.images[(photoIndex + 1) % response?.shop.imagesCount]}
-          prevSrc={
-            response?.shop.images[
-              (photoIndex + response?.shop.imagesCount - 1) % response?.shop.imagesCount
-            ]
-          }
-          onCloseRequest={handleOpenLighbox}
-          onMovePrevRequest={() =>
-            setPhotoIndex(
-              (photoIndex + response?.shop.imagesCount - 1) % response?.shop.imagesCount
-            )
-          }
-          onMoveNextRequest={() => setPhotoIndex((photoIndex + 1) % response?.shop.imagesCount)}
-          imageTitle={`${photoIndex + 1} / ${response?.shop.imagesCount}`}
-          imageCaption={response?.shop.name}
-        />
+        <LightBox 
+          images={response?.shop.images}
+          length={response?.shop.imagesCount}
+          name={response?.shop.name}
+          handleOpenLighbox={handleOpenLighbox}
+          />
       )}
       <div className="layout-main">
         <div className="pt-[10px]">
@@ -161,10 +147,11 @@ const Place = () => {
                           style={{ backgroundImage: `url(${response?.shop.images[3]})` }}
                           onClick={handleOpenLighbox}
                         ></div>
-                        <div
+                        <Link
+                          to={`/place/${response?.shop.slug}/photo`}
                           className={`${
                             response?.shop?.imagesCount > 5 ? 'nohover' : ''
-                          } bg-place-overlay h-full shrink grow bg-[#eee] relative cursor-pointer bg-no-repeat bg-cover`}
+                          } block bg-place-overlay h-full shrink grow bg-[#eee] relative cursor-pointer bg-no-repeat bg-cover`}
                           style={{ backgroundImage: `url(${response?.shop.images[4]})` }}
                         >
                           {response?.shop?.imagesCount > 5 ? (
@@ -174,11 +161,11 @@ const Place = () => {
                           ) : (
                             ''
                           )}
-                        </div>
+                        </Link>
                       </div>
                     </div>
                   </div>
-                  <Link to="/">
+                  <Link to={`/place/${response?.shop.slug}/photo`}>
                     <span className="absolute z-2 top-auto right-auto bottom-5 left-5 cursor-pointer text-base py-1 px-[10px] text-white bg-[rgba(0,0,0,.6)] rounded-[10px] shadow-md transition-all delay-[0.15s]">
                       <BsCardImage className="inline-block pr-1 text-xl" /> Xem tất cả ảnh (
                       {response?.shop.imagesCount})
@@ -582,8 +569,24 @@ const Place = () => {
                             </div>
                           </div>
                         </div>
-
-                        <Review isOpenReview={isToggle} handleOpenReview={handleToggle} />
+                        {/* <ReviewItem isOpenReview={isToggle} handleOpenReview={handleToggle} /> */}
+                        {isToggle && (
+                           <div className="fixed top-0 bottom-0 left-0 right-0 w-full h-full bg-[rgba(0,0,0,0.65)] z-50">
+                           <div className="absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center ">
+                               <div className="w-[610px] relative max-h-[96%] flex flex-col flex-nowrap text-black overflow-hidden bg-white shadow-lg rounded-lg">
+                                   <div className="h-[50px] px-10 w-full shrink-0 text-center border-b border-solid border-[rgba(0,0,0,0.1)]">
+                                       <div className="flex items-center justify-center h-full">
+                                           <h2 className="overflow-hidden text-lg font-bold text-black whitespace-nowrap text-ellipsis">Đánh giá EEBakery Coffee</h2>
+                                       </div>
+                                       <div onClick={handleToggle} className="w-[30px] h-[30px] text-lg absolute top-[10px] right-[10px] flex items-center justify-center bottom-auto left-auto cursor-pointer text-[#666] bg-[#e4e6eb] rounded-[50%]">
+                                           <FaTimes />
+                                       </div>
+                                   </div>
+                                   <Review/>
+                               </div>
+                           </div>
+                       </div>
+                        )}
                       </div>
                     </div>
                     <div className="col l-4">

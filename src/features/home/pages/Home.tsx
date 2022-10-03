@@ -4,9 +4,9 @@ import Slider from '../components/Slider'
 import Purpose from '../components/Purpose'
 import Region from '../components/Region'
 import Location from '../components/Location'
-import suggest_img from '../assets/img/suggest-place.png';
+import suggest_img from '../../../assets/img/suggest-place.png';
 import { Link } from 'react-router-dom'
-import GoToTop from '../components/Common/GoToTop'
+import GoToTop from '../../../components/Common/GoToTop'
 
 const Home = () => {
   return (

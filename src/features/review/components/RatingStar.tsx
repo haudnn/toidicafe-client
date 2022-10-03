@@ -5,7 +5,7 @@ import {FaStar} from 'react-icons/fa'
 
 interface Props  {
   rating:number,
-  handleRating: (a: number) => void;
+  handleRating: (rate: number) => void;
 }
 const fillColorArray = [
   '#e03',

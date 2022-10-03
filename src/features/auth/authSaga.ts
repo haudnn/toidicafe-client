@@ -13,15 +13,14 @@ export interface ResponseGenerator {
   displayName: string;
   avatar: string;
   email: string;
-  userId: string;
   userName: string;
 }
 function* handleRegister(payload : RegisterPayload) {
   try {
     const response: ResponseGenerator = yield call(authApi.register, payload);
-    const { displayName, avatar, email, userId, userName } = response.data.user;
+    const { displayName, avatar, userName } = response.data.user;
     setToken(response.data.user.token);
-    setUser({ displayName, avatar, email, userId, userName });
+    setUser({ displayName, avatar });
     Cookies.set(REFRESH_TOKEN, response.data.user.rftoken);
     yield put(authActions.registerSuccess(response.data.user));
     yield put(authActions.hideAuthForm());
@@ -34,21 +33,22 @@ function* handleRegister(payload : RegisterPayload) {
 function* handleLogin(payload: LoginPayload) {
   try {
     const response: ResponseGenerator = yield call(authApi.login, payload);
-    const { displayName, avatar, email, userId, userName } = response.data.user;
+    const { displayName, avatar } = response.data.user;
     setToken(response.data.user.token);
-    setUser({ displayName, avatar, email, userId, userName });
+    setUser({ displayName, avatar });
     Cookies.set(REFRESH_TOKEN, response.data.user.rftoken);
     yield put(authActions.loginSuccess(response.data.user));
     yield put(authActions.hideAuthForm());
   } catch (error: any) {
-    yield put(authActions.loginFailed(error));
+    console.log(error);
+    yield put(authActions.loginFailed(error.response.message));
   }
 }
 function* handleLogout() {
   try {
-    removeUser();
-    removeToken();
-    Cookies.remove(REFRESH_TOKEN);
+    yield removeUser();
+    yield removeToken();
+    yield Cookies.remove(REFRESH_TOKEN);
     yield put(authActions.logout());
   } catch (error: any) {
     console.log(error);

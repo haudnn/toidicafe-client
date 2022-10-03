@@ -1,6 +1,6 @@
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { Link } from 'react-router-dom';
-import { useSlider, useFetch } from '../hooks/';
+import { useSlider, useFetch } from '../../../hooks';
 const Region = () => {
   const { isLoading, response } = useFetch({
     url: 'regions',

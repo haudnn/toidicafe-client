@@ -1,7 +1,8 @@
 
 import { all } from 'redux-saga/effects';
 import authSaga from '../features/auth/authSaga';
+import searchSaga from '../features/search/searchSaga';
+import writeSaga from '../features/write/writeSaga';
 export default function* rootSaga() {
-  console.log("Root Saga")
-  yield all([authSaga()]);
+  yield all([authSaga(), searchSaga(), writeSaga()]);
 }

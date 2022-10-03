@@ -14,9 +14,10 @@ import { User } from '../../models/user'
 
 const Header = () => {
     const dispatch = useAppDispatch();
-    const [currentUser, setCurrentUser] = useState<User>()
+    const [ currentUser, setCurrentUser] = useState<User>();
     const currentUserSelector = useAppSelector(state => state.auth.currentUser);
     useEffect(() => {
+        setCurrentUser(currentUserSelector)
         if(currentUserSelector) {
             setCurrentUser(currentUserSelector)
         }
@@ -58,7 +59,7 @@ const Header = () => {
                             <>
                                 <div className="mr-[14px] cursor-pointer" >
                                     <div className="h-[40px] w-[40px] text-center bg-[#f0f2f5] rounded-[50%] flex items-center justify-center">
-                                        <Link to="/">
+                                        <Link to="/save">
                                             <img className="w-[20px]" src={bookmark} alt="" />
                                         </Link>
                                     </div>
@@ -72,11 +73,11 @@ const Header = () => {
                                 </div>
                                 <div ref={ref} className="mr-[14px] cursor-pointer relative" >
                                     <div onClick={handleToggle} className="h-[40px] w-[40px] overflow-hidden rounded-[50%]">
-                                        <img className="" src="https://res.cloudinary.com/mycloudiary/image/upload/v1660812252/toidicaphe/default-avt_phrdn2.jpg" alt="" />
+                                        <img className="" src={currentUser.avatar} alt="" />
                                         {isToggle && <div className="rounded-md absolute top-[50px] right-0 bottom-auto left-auto z-50 w-[200px] bg-white border-none overflow-hidden shadow-lg ">
                                             <div className="relative ">
                                                 <Link to="/" className="hover:bg-[#f6f6f6] group flex item-center justify-start cursor-pointer py-2 px-[14px] text-black border-b border-solid border-b-[#eee]">
-                                                    <img src="https://res.cloudinary.com/mycloudiary/image/upload/v1660812252/toidicaphe/default-avt_phrdn2.jpg" alt="" className="w-[40px] h-[40px] rounded-[50%]" />
+                                                    <img  src={currentUser.avatar} alt="" className="w-[40px] h-[40px] rounded-[50%]" />
                                                     <div className="pl-2 overflow-hidden">
                                                         <span className="block overflow-hidden text-base font-semibold text-black whitespace-nowrap text-ellipsis group-hover:text-[#e03]">
                                                             {currentUser.displayName}
