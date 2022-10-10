@@ -39,7 +39,7 @@ const Header = () => {
                         <img src={logo} alt="Tôi đi cafe logo" />
                     </Link>
                     <div className="max-h-[60px] flex gap-x-[30px] items-center ">
-                        <Link to="/" className="h-[60px] leading-[60px] font-semibold text-base block">
+                        <Link to="/explore" className="h-[60px] leading-[60px] font-semibold text-base block">
                             # Khám phá
                         </Link>
                         <Link to="/" className=" h-[60px] leading-[60px] font-semibold text-base block">

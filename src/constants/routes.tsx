@@ -5,7 +5,7 @@ import Profile from '../features/profile/page/Profile';
 import Save from '../features/save/pages/Save';
 import Search from '../features/search/pages/Search';
 import Home from '../features/home/pages/Home';
-import Write from '../features/write/pages/Write';
+import Review from '../features/review/pages/Review';
 
 
 const routes = [
@@ -39,7 +39,7 @@ const routes = [
   },
   {
     path: '/review',
-    component: <Write />,
+    component: <Review />,
   },
 ];
 

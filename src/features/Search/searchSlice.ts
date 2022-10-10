@@ -42,6 +42,6 @@ export const searchActions = searchSlice.actions;
 
 export const selectIsLoading = (state: any) => state.search.isLoading;
 export const selectMessages = (state: any) => state.search.messages;
-const serachReducer = searchSlice.reducer;
+const searchReducer = searchSlice.reducer;
 
-export default serachReducer
+export default searchReducer

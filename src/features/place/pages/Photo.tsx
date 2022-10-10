@@ -2,7 +2,7 @@ import React from 'react';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { useParams, Link } from 'react-router-dom';
 import { useFetch, useToggle } from '../../../hooks';
-import LightBox from '../components/LightBox';
+import LightBox from '../../../components/Common/LightBox';
 import SkeletonPhoto from '../components/SkeletonPhoto';
 const Photo = () => {
   const { slug } = useParams();

@@ -4,7 +4,7 @@ import { BsSearch } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { BASE_URI } from '../../../constants';
-import { writeActions } from '../writeSlice';
+import { reviewActions } from '../reviewSlice';
 import ShopItem from './ShopItem';
 
 interface Address {
@@ -57,9 +57,9 @@ const SearchBar = () => {
   };
   const handleClickShop = (data:Data) => {
     const {id, name, address, image, slug} = data
-    dispatch(writeActions.hideSearch())
-    dispatch(writeActions.pickedPlace({name, address, image, slug}))
-    dispatch(writeActions.getReview({shopId: id}))
+    dispatch(reviewActions.hideSearch())
+    dispatch(reviewActions.pickedPlace({name, address, image, slug, id}))
+    dispatch(reviewActions.getReview({shopId: id}))
   }
   return (
     <div>

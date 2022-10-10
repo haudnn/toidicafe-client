@@ -12,6 +12,7 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.response.use( (response: AxiosResponse) => response, async (error) => {
     const config = error.config;
+    console.log(error.response)
     // if (
     //   error.response?.status === 403 && error.response.data.message === "Refresh token has expired") {
     //   window.location.href = '/login/';

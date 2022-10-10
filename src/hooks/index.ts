@@ -7,6 +7,7 @@ import useDebounce from './useDebounce'
 import useGoToTop from './useGoToTop'
 import useOnScroll from './useOnScroll'
 import useToggle from './useToggle'
+import useRatingText from './useRatingText'
 export {
     useValidator,
     useFetch,
@@ -16,5 +17,6 @@ export {
     useDebounce,
     useGoToTop,
     useOnScroll,
-    useToggle
+    useToggle,
+    useRatingText
 }

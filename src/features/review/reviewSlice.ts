@@ -1,41 +1,46 @@
-
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Response} from '../../interfaces';
 interface PlacePayload {
     name: string;
     image: string;
     address: string;
     slug: string;   
+    id: string;
 }
-interface WritePayload {
+interface ReviewPayload {
     shopId: string;
-  }
+}
 interface sliceReview {
     message: string;
     reviews: Array<any>;
     reviewsCount: number;
     avgRate: number 
 }
-interface writeState {
+interface reviewState {
     isLoading: Boolean;
     isSearch: Boolean;
     message?: String;
+    error?: string;
     place: {
         name?: String;
         image?: String;
         address?: String;
         slug?: String;
+        id?: string;
     }
     reviews: sliceReview
 }
-const initialState: writeState = {
+const initialState: reviewState = {
     isLoading : false,
     isSearch : false,
-    message : undefined,
+    message :undefined,
+    error : undefined,
     place : {
         name: undefined,
         image: undefined,
         address: undefined,
         slug: undefined,
+        id: undefined,
     },
     reviews : { 
         message: "",
@@ -45,8 +50,8 @@ const initialState: writeState = {
     }
 };
 
-const writeSlice = createSlice({
-    name: 'write',
+const reviewSlice = createSlice({
+    name: 'review',
     initialState,
     reducers: {
         pickedPlace(state, action: PayloadAction<PlacePayload>) {
@@ -57,6 +62,7 @@ const writeSlice = createSlice({
             state.place.name= undefined
             state.place.image = undefined
             state.place.slug = undefined
+            state.place.id = undefined
             state.reviews = {
                 message: "",
                 reviews: [],
@@ -64,7 +70,7 @@ const writeSlice = createSlice({
                 avgRate: 0
             }
         },
-        getReview(state, action: PayloadAction<WritePayload> ) {
+        getReview(state, action: PayloadAction<ReviewPayload> ) {
             state.isLoading = true           
         },  
         getReviewSuccess(state, action: PayloadAction<sliceReview>) {
@@ -73,22 +79,37 @@ const writeSlice = createSlice({
         },
         getReviewFailed(state, action: PayloadAction<string>) {
             state.isLoading = false  
-            state.message = action.payload
         },
         showSearch(state){
             state.isSearch = true
         }, 
         hideSearch(state) {
             state.isSearch = false
+        },
+        createReview(state, action: any) {
+            state.isLoading = true
+        },
+        createReviewSuccess(state, action: PayloadAction<Response>) { 
+            state.isLoading = false
+            state.message = action.payload.message
+        },
+        createReviewFailed(state, action: PayloadAction<Response>) {
+            state.isLoading = false
+            state.error = action.payload.error
+        },
+        setMessage(state) {
+            state.message = undefined;   
         }
-    }
-})
-export const writeActions = writeSlice.actions;
+     }
+ })
+export const reviewActions = reviewSlice.actions;
 
-export const selectIsLoading = (state: any) => state.write.isLoading;
-export const selectPlace = (state: any) => state.write.place;
-export const selectReviews = (state: any) => state.write.reviews;
-export const selectIsSearch = (state: any) => state.write.isSearch
+export const selectIsLoading = (state: any) => state.review.isLoading;
+export const selectPlace = (state: any) => state.review.place;
+export const selectReviews = (state: any) => state.review.reviews;
+export const selectIsSearch = (state: any) => state.review.isSearch
+export const selectMessage = ( state: any) => state.review.message
+export const selectError = ( state: any) => state.review.error
 
-const writeReducer = writeSlice.reducer;
-export default writeReducer
+const reviewReducer = reviewSlice.reducer;
+export default reviewReducer

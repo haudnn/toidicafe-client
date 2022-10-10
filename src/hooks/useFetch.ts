@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BASE_URI } from '../constants';
-import { getAccessToken } from '../utils/localStorage';
 
-// interface 
+
 interface Response {
     message: string;
     shop: any;
@@ -12,6 +11,7 @@ interface Response {
     purposes:Array<any>;
     tags: Array<any>;
     benefits: Array<any>;
+    reviews: Array<any>;
 }
 const useFetch = (options:any) => {
   const {method, payload, url, headers} = options

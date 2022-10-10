@@ -10,7 +10,6 @@ interface Props {
 }
 const LightBox = ({images, length, name, handleOpenLighbox}: Props) => {
     const [photoIndex, setPhotoIndex] = useState(0);
-
     return (
         <Lightbox
         mainSrc={images[photoIndex]}

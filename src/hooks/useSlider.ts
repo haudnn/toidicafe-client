@@ -2,7 +2,6 @@
 import { useKeenSlider } from "keen-slider/react"
 export default function useSlider(name:string,) {
     let perview:number = 0;
-    console.log(name)
         if(name === "regions"){
             perview = 4
         }

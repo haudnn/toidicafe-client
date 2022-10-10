@@ -42,6 +42,22 @@ const shopApi = {
         headers: headers,
       }
       );
+    },
+    getShopBySlug(slug: any){
+      const access_token = getAccessToken()
+      const url = `/shops/${slug}`
+      if(access_token){
+        const headers = {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${access_token}`
+        }   
+        return axiosClient.get(url,{
+          headers: headers,
+        });
+      }
+      else {
+        return axiosClient.get(url);
+      }
     }
   }
 

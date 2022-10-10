@@ -2,12 +2,14 @@ import { Action, combineReducers, configureStore, ThunkAction } from '@reduxjs/t
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './rootSaga';
 import authReducer from '../features/auth/authSlice';
-import serachReducer from '../features/search/searchSlice';
-import writeReducer from '../features/write/writeSlice';
+import searchReducer from '../features/search/searchSlice';
+import reviewReducer from '../features/review/reviewSlice';
+import placeReducer from '../features/place/placeSlice';
 const rootReducer = combineReducers({
   auth: authReducer,
-  search: serachReducer,
-  write: writeReducer
+  search: searchReducer,
+  review: reviewReducer,
+  place: placeReducer
 });
 
 const sagaMiddleware = createSagaMiddleware();
