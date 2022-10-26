@@ -4,9 +4,8 @@ import ImageUploading, { ImageListType } from 'react-images-uploading';
 import { AiOutlineCamera } from 'react-icons/ai';
 import { MdDeleteOutline } from 'react-icons/md';
 import { useAppSelector, useAppDispatch } from '../../../app/hooks';
-import {  selectPlace, reviewActions, selectMessage } from '../reviewSlice';
-
-
+import {  selectPlace, reviewActions, selectMessage, selectIsLoading } from '../reviewSlice';
+import Loading from '../../../components/Common/Loading';
 interface Star {
   position: number;
   space: number;
@@ -26,6 +25,7 @@ interface Props {
 const Create = ({handleNavigate}:Props) => {
   const { id } = useAppSelector(selectPlace);
   const dispatch = useAppDispatch();
+  const isLoading = useAppSelector(selectIsLoading);
   const message = useAppSelector(selectMessage);
   const [data, setData] = useState<Data>({
     title: '',
@@ -56,6 +56,7 @@ const Create = ({handleNavigate}:Props) => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     let formData = new FormData();
+
     const { title, body, anonymous, star } = data;
     formData.append('title', title);
     formData.append('body', body);
@@ -170,8 +171,12 @@ const Create = ({handleNavigate}:Props) => {
         <button
           type="submit"
           onClick={handleSubmit}
+          disabled={isLoading ? true : false}
           className="cursor-pointer text-white bg-[#e03] text-base font-medium py-[6px] px-[10px] rounded-md flex items-center justify-center"
         >
+          {
+            isLoading && <Loading/>
+          }
           Gửi đánh giá
         </button>
       </div>

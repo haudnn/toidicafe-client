@@ -5,11 +5,13 @@ import authReducer from '../features/auth/authSlice';
 import searchReducer from '../features/search/searchSlice';
 import reviewReducer from '../features/review/reviewSlice';
 import placeReducer from '../features/place/placeSlice';
+import commentReducer from '../features/comment/commentSlice';
 const rootReducer = combineReducers({
   auth: authReducer,
   search: searchReducer,
   review: reviewReducer,
-  place: placeReducer
+  place: placeReducer,
+  comment: commentReducer
 });
 
 const sagaMiddleware = createSagaMiddleware();

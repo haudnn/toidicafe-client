@@ -5,7 +5,7 @@ import {useState} from "react"
 interface Props {
   images: Array<any>, 
   length:number, 
-  name:string, 
+  name?:string, 
   handleOpenLighbox: any
 }
 const LightBox = ({images, length, name, handleOpenLighbox}: Props) => {

@@ -22,7 +22,6 @@ function* handleGetReviews(action: PayloadAction<ReviewPayload>) {
 
 function* handleCreateReview(action: PayloadAction) {
   try {
-
     const response: ResponseGenerator = yield call(createReview, action.payload);
     console.log(response.data);
     yield put(reviewActions.createReviewSuccess(response.data)); 

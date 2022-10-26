@@ -22,6 +22,7 @@ const Review = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
   const isSearch = useAppSelector(selectIsSearch);
+
   const { reviews, reviewsCount, avgRate } = useAppSelector(selectReviews);
   const { name, image, address, slug } = useAppSelector(selectPlace);
   const ref = useRef<HTMLDivElement | null>(null);

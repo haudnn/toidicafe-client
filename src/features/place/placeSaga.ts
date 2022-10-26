@@ -16,8 +16,7 @@ function* handleGetShop(action: PayloadAction<PlacePayload>) {
     const response: ResponseGenerator = yield call(getShopBySlug, action.payload);
     yield put(placeActions.getShopSuccess(response.data.shop));
   } catch (err: any) {
-    console.log(err) 
-    // yield put(placeActions.getShopFailed(err.data.message));
+    console.log(err);
   }
 }
 

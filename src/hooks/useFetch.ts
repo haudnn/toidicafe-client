@@ -12,6 +12,7 @@ interface Response {
     tags: Array<any>;
     benefits: Array<any>;
     reviews: Array<any>;
+    comments : Array<any>;
 }
 const useFetch = (options:any) => {
   const {method, payload, url, headers} = options

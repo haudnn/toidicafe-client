@@ -21,7 +21,10 @@ const Explore = () => {
                 {
                     response?.reviews.map((review, index) => (
                         <ReviewItem
+                        id={review._id}
                         key={index}
+                        likesCount={review.likes.length}
+                        commentsCount={review.comments.length}
                         avatar={review.author.avatar}
                         displayName={review.author.displayName}
                         name={review.shop.name}
@@ -29,6 +32,7 @@ const Explore = () => {
                         date= {review.date}
                         body= {review.body}
                         slug= {review.shop.slug}
+                        images={review.images}
                         />
                     ))
                 }

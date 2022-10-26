@@ -2,6 +2,8 @@
 export interface Response { 
     error?: string
     message?: string
+    comment?: any
+    comments: Array<any>
 }
 export interface ReviewPayLoad { 
     shopId: string;

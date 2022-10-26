@@ -33,9 +33,9 @@ function* handleRegister(payload : RegisterPayload) {
 function* handleLogin(payload: LoginPayload) {
   try {
     const response: ResponseGenerator = yield call(authApi.login, payload);
-    const { displayName, avatar } = response.data.user;
+    const { displayName, avatar, id } = response.data.user;
     setToken(response.data.user.token);
-    setUser({ displayName, avatar });
+    setUser({ displayName, avatar, userId: id });
     Cookies.set(REFRESH_TOKEN, response.data.user.rftoken);
     yield put(authActions.loginSuccess(response.data.user));
     yield put(authActions.hideAuthForm());
