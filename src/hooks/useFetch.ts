@@ -3,21 +3,11 @@ import axios from 'axios';
 import { BASE_URI } from '../constants';
 
 
-interface Response {
-    message: string;
-    shop: any;
-    shops:Array<any>;
-    regions:Array<any>;
-    purposes:Array<any>;
-    tags: Array<any>;
-    benefits: Array<any>;
-    reviews: Array<any>;
-    comments : Array<any>;
-}
-const useFetch = (options:any) => {
+
+const useFetch = (options) => {
   const {method, payload, url, headers} = options
   const [isLoading, setIsLoading] = useState(false);
-  const [response, setResponse] = useState<Response>() 
+  const [response, setResponse] = useState() 
   useEffect(() => {
     async function fetching() {
       setIsLoading(true);
